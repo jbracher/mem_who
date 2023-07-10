@@ -375,7 +375,7 @@ classification_matrix <- function(results_0.4, results_0.9, results_0.975, peaks
 # function to generate mosaic plot of classifications:
 mosaic <- function(classification_matrix){
   # initialize plot:
-  plot(NULL, xlim = 0:1, ylim = 0:1, xlab = "", ylab = "", axes = FALSE)
+  plot(NULL, xlim = 0:1, ylim = 0:1, xlab = "fractions of assigned intensity levels", ylab = "", axes = FALSE)
   # put axis on the right:
   axis(1)
   axis(4)
@@ -396,72 +396,72 @@ mosaic <- function(classification_matrix){
 
 
 
-classification_matrix <- function(results_0.4, results_0.9, results_0.975, peaks_test, i.seasons){
-  # true classification of peaks:
-  peaks_test <- sort(peaks_test)
-  n_peaks_test <- length(peaks_test)
-  
-  # label to handle indices later
-  label_i.seasons <- paste0("i.seasons_", i.seasons)
-  
-  # matrices to store stuff:
-  classifications <- matrix(ncol = 4, nrow = n_peaks_test)
-  colnames(classifications) <- c("low", "medium", "high", "very_high")
-  exceedance <- classifications
-  
-  # function to compare a vector of peak values and a single threshold (to be put into sapply)
-  at_least <- function(new, thresholds) mean(new >= thresholds)
-  
-  # compute exceedance probabilities for different true classes:
-  for (i in 1:n_peaks_test) {
-      # low (handle using multiplication by 0):
-      exceedance[i, "low"] <-  1
-      # medium:
-      exceedance[i, "medium"] <-  at_least(new = peaks_test[i], thresholds = results_0.4[, label_i.seasons])
-      # high
-      exceedance[i, "high"] <-  at_least(new = peaks_test[i], thresholds = results_0.9[, label_i.seasons])
-      # very high
-      exceedance[i, "very_high"] <-  at_least(new = peaks_test[i], thresholds = results_0.975[, label_i.seasons])
-  }
-  
-  # get classification probabilities via differences
-  classifications[, "very_high"] <- exceedance[, "very_high"]
-  classifications[, "high"] <- (exceedance[, "high"] - exceedance[, "very_high"])
-  classifications[, "medium"] <- (exceedance[, "medium"] - exceedance[, "high"])
-  classifications[, "low"] <- (exceedance[, "low"] - exceedance[, "medium"])
-  
-  # return
-  return(classifications)
-}
-
-
-mosaic <- function(classification_matrix){
-  # initialize plot:
-  par(las = 1)
-  plot(NULL, xlim = 0:1, ylim = 0:1, xlab = "fractions of assigned intensity levels", ylab = "", axes = FALSE)
-  # put axis on the right:
-  axis(1)
-  axis(4)
-  par(las = 0)
-  mtext("true quantile level of peak", side = 4, cex = 0.65, line = 2.5)
-  box()
-  
-  # figure out coordinates and colors:
-  y_coords <- rep(seq(from = 0, to = 1, length.out = nrow(classification_matrix) + 1), each = 2)
-  x_coords <- matrix(NA, ncol = 4, nrow = 2*nrow(classification_matrix) + 2)
-  colnames(x_coords) <- c("low", "medium", "high", "very_high")
-  x_coords[, "very_high"] <- c(0, rep(1, 2*nrow(classification_matrix)), 0)
-  x_coords[, "high"] <- c(0, rep(1 - classification_matrix[, "very_high"], each = 2), 0)
-  x_coords[, "medium"] <- c(0, rep(classification_matrix[, "low"] + classification_matrix[, "medium"], each = 2), 0)
-  x_coords[, "low"] <- c(0, rep(classification_matrix[, "low"], each = 2), 0)
-  
-  cols <- c(col_low, col_medium, col_high, col_very_high, las = 1)
-  
-  # run through rows and columns of classification matrix and add rectangles:
-  polygon(x = x_coords[, "very_high"], y = y_coords, col = col_very_high, border = NA)
-  polygon(x = x_coords[, "high"], y = y_coords, col = col_high, border = NA)
-  polygon(x = x_coords[, "medium"], y = y_coords, col = col_medium, border = NA)
-  polygon(x = x_coords[, "low"], y = y_coords, col = col_low, border = NA)
-  
-  abline(h = c(0.4, 0.9, 0.975), col = "black", lty = 3)
-}
+# classification_matrix <- function(results_0.4, results_0.9, results_0.975, peaks_test, i.seasons){
+#   # true classification of peaks:
+#   peaks_test <- sort(peaks_test)
+#   n_peaks_test <- length(peaks_test)
+#   
+#   # label to handle indices later
+#   label_i.seasons <- paste0("i.seasons_", i.seasons)
+#   
+#   # matrices to store stuff:
+#   classifications <- matrix(ncol = 4, nrow = n_peaks_test)
+#   colnames(classifications) <- c("low", "medium", "high", "very_high")
+#   exceedance <- classifications
+#   
+#   # function to compare a vector of peak values and a single threshold (to be put into sapply)
+#   at_least <- function(new, thresholds) mean(new >= thresholds)
+#   
+#   # compute exceedance probabilities for different true classes:
+#   for (i in 1:n_peaks_test) {
+#       # low (handle using multiplication by 0):
+#       exceedance[i, "low"] <-  1
+#       # medium:
+#       exceedance[i, "medium"] <-  at_least(new = peaks_test[i], thresholds = results_0.4[, label_i.seasons])
+#       # high
+#       exceedance[i, "high"] <-  at_least(new = peaks_test[i], thresholds = results_0.9[, label_i.seasons])
+#       # very high
+#       exceedance[i, "very_high"] <-  at_least(new = peaks_test[i], thresholds = results_0.975[, label_i.seasons])
+#   }
+#   
+#   # get classification probabilities via differences
+#   classifications[, "very_high"] <- exceedance[, "very_high"]
+#   classifications[, "high"] <- (exceedance[, "high"] - exceedance[, "very_high"])
+#   classifications[, "medium"] <- (exceedance[, "medium"] - exceedance[, "high"])
+#   classifications[, "low"] <- (exceedance[, "low"] - exceedance[, "medium"])
+#   
+#   # return
+#   return(classifications)
+# }
+# 
+# 
+# mosaic <- function(classification_matrix){
+#   # initialize plot:
+#   par(las = 1)
+#   plot(NULL, xlim = 0:1, ylim = 0:1, xlab = "fractions of assigned intensity levels", ylab = "", axes = FALSE)
+#   # put axis on the right:
+#   axis(1)
+#   axis(4)
+#   par(las = 0)
+#   mtext("true quantile level of peak", side = 4, cex = 0.65, line = 2.5)
+#   box()
+#   
+#   # figure out coordinates and colors:
+#   y_coords <- rep(seq(from = 0, to = 1, length.out = nrow(classification_matrix) + 1), each = 2)
+#   x_coords <- matrix(NA, ncol = 4, nrow = 2*nrow(classification_matrix) + 2)
+#   colnames(x_coords) <- c("low", "medium", "high", "very_high")
+#   x_coords[, "very_high"] <- c(0, rep(1, 2*nrow(classification_matrix)), 0)
+#   x_coords[, "high"] <- c(0, rep(1 - classification_matrix[, "very_high"], each = 2), 0)
+#   x_coords[, "medium"] <- c(0, rep(classification_matrix[, "low"] + classification_matrix[, "medium"], each = 2), 0)
+#   x_coords[, "low"] <- c(0, rep(classification_matrix[, "low"], each = 2), 0)
+#   
+#   cols <- c(col_low, col_medium, col_high, col_very_high, las = 1)
+#   
+#   # run through rows and columns of classification matrix and add rectangles:
+#   polygon(x = x_coords[, "very_high"], y = y_coords, col = col_very_high, border = NA)
+#   polygon(x = x_coords[, "high"], y = y_coords, col = col_high, border = NA)
+#   polygon(x = x_coords[, "medium"], y = y_coords, col = col_medium, border = NA)
+#   polygon(x = x_coords[, "low"], y = y_coords, col = col_low, border = NA)
+#   
+#   abline(h = c(0.4, 0.9, 0.975), col = "black", lty = 3)
+# }

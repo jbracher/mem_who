@@ -251,7 +251,7 @@ cm_nolog_fr_15 <- classification_matrix(thresholds_nolog_fr_0.4, thresholds_nolo
 
 # Plot for thresholds without smoothing:
 
-pdf("../Draft/figure/mosaic_fr_fancy.pdf", width = 9, height = 11)
+pdf("../Draft/figure/mosaic_fr.pdf", width = 9, height = 11)
 # structure plot area:
 layout(matrix(c(1, 2, 3, 4,
                 5, 6, 7, 8,
@@ -359,7 +359,7 @@ cm1_smoothed3_smoothed3_fr_15 <- classification_matrix(thresholds1_smoothed3_fr_
 
 
 
-pdf("../Draft/figure/mosaic_log_smoothed_fr_fancy.pdf", width = 9, height = 6)
+pdf("../Draft/figure/mosaic_log_smoothed_fr.pdf", width = 9, height = 6)
 # structure plot area:
 layout(matrix(c(1, 2, 3, 4,
                 5, 6, 7, 8,
