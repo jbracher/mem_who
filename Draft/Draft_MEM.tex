@@ -282,7 +282,7 @@ We assume that $\mathbf{Y}_1, \dots, \mathbf{Y}_m$ are identically and independe
 \sigma_{n, 1} & \cdots & \sigma_{n, n}
 \end{array}\right).
 \end{align}
-To make notation more intuitive we also write $\sigma^2_i = \sigma_{i, i}$. Construction of thresholds is based on the reference set $\mathcal{Y}$, which pools the elements of the vectors $\mathbf{Y}_1, \dots, \mathbf{Y}_m$. It can be shown that the expectations of $\bar{Y}$ and $S^2$ as defined in equation \eqref{eq:moments} are given by
+To make notation more intuitive we also write $\sigma^2_i = \sigma_{i, i}$. Construction of thresholds is based on the reference set $\mathcal{Y}$, which pools the elements of the vectors $\mathbf{Y}_1, \dots, \mathbf{Y}_m$. It can be shown that the expectations of the empirical mean $\bar{Y}$ and variance $S^2$ of the observations in the reference set (see in equation) \eqref{eq:moments} are given by
 \begin{align}
 \mathbb{E}(\bar{Y}) & = \frac{1}{n} \sum_{i = 1}^n \mu_i,
 \label{eq:expectation_mu}\\
@@ -591,6 +591,8 @@ In the present work we aimed to assess properties of the MEM and WHO methods in 
 
 Another general question is whether a categorization into four categories is the most practical way of conveying influenza activity. In principle it would also be possible to just report the percentile of the fitted distribution corresponding to a new peak. This would result in a continuous scale from 0 to 100, with higher values indicating higher intensity. However, given the previously discussed difficulties with estimating extreme quantiles, a percentile-based display may also convey a false sense of exactness.
 
+In our two empirical examples we found the normal distribution to provide a quite good fit to the distribution of log-transformed season peak incidences. However, it is unclear how generalizable this is. For indicators which represent fractions, like positivity percentages, it may not be a suitable choice as in principle the threshold for high or very high activity could be above 100\%. Then different transformations (like the logit) or distributional assumptions would be necessary. For the US ILI percentages, no practical problem arose, but this may well be the case for other indicators.
+
 A more technical question concerns how extreme seasons in the historical data should be handled. These can have a substantial effect on thresholds. In our simulation study we pragmatically removed observations from the pandemic season 2009/2010. However, a more principled approach to determining which historical seasons should be excluded would be desirable. As the same problem arises in outbreak detection, this strand of literature may be a helpful starting point (see e.g., \citealt{Noufaily2013}).
 
 
@@ -620,7 +622,7 @@ No ethics approval was necessary as this study uses exclusively publicly availab
 
 \section*{Acknowledgements}
 
-We would like to thank Michael H\"ohle, Rob Moss, Laura Werlen and Daniel Wolffram for helpful discussions. Johannes Bracher was supported by the Helmholtz Foundation via the SIMCARD Information and Data Science Pilot Project as well as Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) -- project number 512483310.
+We would like to thank Sebastian Funk, Michael H\"ohle, Rob Moss, Laura Werlen and Daniel Wolffram for helpful discussions. Johannes Bracher was supported by the Helmholtz Foundation via the SIMCARD Information and Data Science Pilot Project as well as Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) -- project number 512483310.
 
 {\footnotesize
 \bibliographystyle{apalike}
