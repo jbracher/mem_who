@@ -31,12 +31,12 @@ $^2$Heidelberg Institute for Theoretical Studies (HITS), Computational Statistic
 
 \abstract{
 \begin{quote}
-\footnotesize Intensity thresholds serve to make influenza activity comparable across countries and surveillance systems. The moving epidemic method (MEM) and the WHO method are widely used to classify season peaks as low, medium, high or very high. In both methods, thresholds correspond to quantiles of a normal distribution fitted to a set of potentially transformed historical observations. However, there are differences in how this set is constructed. We assess the impact of these choices analytically and in simulation studies. We find that under the default settings of both the MEM and WHO method, on average more season peaks than intended are classified as high or very high. Combining characteristics of both, better-calibrated thresholds can be achieved. Even these, however, must be expected to have rather modest positive predictive values and should be interpreted with care.
+\footnotesize Intensity thresholds serve to make influenza activity comparable across countries and surveillance systems. The moving epidemic method (MEM) and the WHO method are widely used to classify season peaks as low, medium, high or very high. In both methods, thresholds correspond to quantiles of a normal distribution fitted to a set of potentially transformed historical observations. However, there are differences in how this set is constructed. We assess the impact of these choices analytically and in simulation studies. We find that under the default settings of both the MEM and WHO method, on average more season peaks than intended are classified as high or very high. Combining characteristics of both, better-calibrated thresholds can be achieved. Even these, however, must be expected to have rather modest sensitivity and positive predictive values.
 \end{quote}
 }
 
 \begin{center}
-\textbf{Author's summary}
+\textbf{Extended summary}
 \end{center}
 
 {\begin{quote}
@@ -78,7 +78,7 @@ $^2$Heidelberg Institute for Theoretical Studies (HITS), Computational Statistic
 
 \section{Introduction}
 
-Influenza intensity thresholds are a common tool to make influenza activity comparable across different countries and surveillance systems. Based on data from past influenza seasons, they provide a classification into \textit{low}, \textit{medium}, \textit{high} or \textit{very high} intensity. While thresholds are designed to assess the season peak intensity, they are also used to monitor spatial and temporal patterns over the course of a season. To this end, intensity classifications are commonly summarized in heat charts and maps; see Figure \ref{fig:maps} for an example from the \textit{Flu News Europe} platform run by the World Health Organization (WHO) and the European Center for Disease Prevention and Control (ECDC). Intensity thresholds thus play an important role in assessing the influenza situation at an international level.
+Influenza intensity thresholds are a common tool to make influenza activity comparable across different countries and surveillance systems. Based on data from past influenza seasons, they provide a classification into \textit{low}, \textit{medium}, \textit{high} or \textit{very high} intensity. While thresholds are designed to assess season peak intensities, they are also used to monitor spatial and temporal patterns over the course of a season. To this end, intensity classifications are commonly summarized in heat charts and maps; see Figure \ref{fig:maps} for an example from the \textit{Flu News Europe} platform run by the World Health Organization (WHO) and the European Center for Disease Prevention and Control (ECDC). Intensity thresholds thus play an important role in assessing the influenza situation at an international level.
 
 \begin{figure}[h!]
 \begin{center}
@@ -88,7 +88,7 @@ Influenza intensity thresholds are a common tool to make influenza activity comp
 
 \includegraphics[width=0.8\textwidth]{figure/heat_chart.png}
 \end{center}
-\caption{Influenza intensity map (top, week 01/2023) and heat chart (bottom, weeks 01--07/2023) as published by \textit{Flu News Europe} (\url{https://flunewseurope.org/SeasonOverview}). Copyright: World Health Organization 2023 and European Centre for Disease Prevention and Control 2023.
+\caption{Influenza intensity map (top, week 01/2023) and heat chart (bottom, weeks 01--07/2023) as published by \textit{Flu News Europe} (\url{https://flunewseurope.org/SeasonOverview}). Copyright: World Health Organization, 2023, and European Centre for Disease Prevention and Control, 2023.
 Reproduction is authorised, provided the source is acknowledged}
 \label{fig:maps}
 \end{figure}
@@ -117,7 +117,7 @@ This is a purely statistical definition, and threshold setting corresponds to es
 \item \textbf{Ease of practical application.} Besides conceptual simplicity, ease of application is central. Methods should be straightforward to apply using well-documented and ideally open-source software packages.
 \end{description}
 
-\noindent We note that while the overarching goal of the \textit{WHO PISA} guidelines is to enhance preparedness for \textit{pandemic influenza}, the intended statistical properties of the MEM and WHO methods refer to \textit{seasonal influenza waves}. The rationale is that a good understanding of the range of peak intensities of seasonal influenza is the basis for a meaningful assessment of pandemic influenza outbreaks. Our reasoning in the following therefore focuses on this setting of subsequent waves of seasonal influenza. Note that we only address the question of peak intensity thresholds, but not season onset / baseline thresholds \citep{Vega2013}. Also, we do not address the question of determining peak intensity in real time, i.e., before the season peak has been reached or before it is clear whether a peak has been reached. Rather than simple thresholds, this would require control charts (see e.g., \citealt{Liu2019}), which we consider outside the scope of the present article.
+\noindent We note that while the overarching goal of the \textit{WHO PISA} guidelines is to enhance preparedness for \textit{pandemic influenza}, the intended statistical properties of the MEM and WHO methods refer to \textit{seasonal influenza waves}. The rationale is that a good understanding of the range of peak intensities of seasonal influenza is the basis for a meaningful assessment of pandemic influenza outbreaks. Our reasoning in the following therefore focuses on the setting of subsequent waves of seasonal influenza. Note that we only address the question of peak intensity thresholds, but not season onset / baseline thresholds \citep{Vega2013}. Also, we do not address the question of determining peak intensity in real time, i.e., before the season peak has been reached or before it is clear whether a peak has been reached. Rather than simple thresholds, this would require control charts (see e.g., \citealt{Liu2019}), which we consider outside the scope of the present article.
 
 \section{Definition of the moving epidemic and WHO methods}
 \label{sec:definitions}
@@ -129,7 +129,7 @@ While framed slightly differently in the respective documentations, the MEM and 
 $$
 x^\text{smo}_{j, k} = \frac{1}{l} \sum_{d = 0}^{l - 1} x^\text{raw}_{j, k - d}, \ \ k = l, \dots, 52
 $$ the smoothed version. In the remainder of this description we denote whichever of $x^\text{raw}_{j, k}$ and $x^\text{smo}_{j, k}$ is used to compute thresholds by $x_{j, k}$.
-\item \textbf{Sorting:} Within each historical season $j = 1, \dots, m$ order all observations $x_{j, k}$ in decreasing order, denoting the $i$-th largest observation from season $j$ by $x^{(i)}_j$.
+\item \textbf{Sorting:} Within each historical season $j = 1, \dots, m$ order all observations $x_{j, k}$ in decreasing order, denoting the $i$-th largest observation from season $j$ by $x^{(i)}_j$. More generally we will in the following use the notation $^{(\cdot)}$ to denote an ordering of values, e.g., denoting by $x^{\text{raw}, (i)}_j$ the $i$-th largest unsmoothed incidence value from season $j$.
 \item \textbf{Selection of reference set:} Select the $n$ largest observations from each of the $m$ past seasons to construct a reference set $\mathcal{X} = \{x_j^{(i)}: j = 1, \dots, m; i = 1, \dots, n\}$.
 \item \textbf{Data transformation:} Apply a monotonically increasing transformation $y_j^{(i)} = f(x_j^{(i)})$ to all members of the reference set $\mathcal{X}$ to obtain a reference set $\mathcal{Y}$ of transformed historical observations.
 \item \textbf{Fitting a normal distribution:} Assume that the transformed values in $\mathcal{Y}$ come from a normal distribution and compute estimates of its mean and standard deviation,
@@ -143,7 +143,7 @@ $$ the smoothed version. In the remainder of this description we denote whicheve
 \begin{equation}
 \hat{q}_{Y, \alpha} = \bar{y} + z_\alpha \sd, \label{eq:def_q}
 \end{equation}
-where $z_\alpha$ is the $\alpha$ quantile of the standard normal distribution. These can be interpreted as estimates of quantiles $q_{Y, \alpha}$ of an underlying theoretical distribution. A common choice is
+where $z_\alpha$ is the $\alpha$ quantile of the standard normal distribution. The $\hat{q}_{Y, \alpha}$ can be interpreted as estimates of quantiles $q_{Y, \alpha}$ of an underlying theoretical distribution. A common choice for $\alpha$ is
 \begin{itemize}
 \item the 40th percentile $\hat{q}_{Y, 0.4} = \bar{y} - 0.25 \sd$ as the threshold for medium intensity;
 \item the 90th percentile $\hat{q}_{Y, 0.9} = \bar{y} + 1.28 \sd$ as the threshold for high intensity;
@@ -154,7 +154,7 @@ $$
 \hat{q}_{X, \alpha} = f^{-1}(\hat{q}_{Y, \alpha})
 $$
 for $\alpha = 0.4, 0.9, 0.975$.
-\item \textbf{Application of thresholds:} The obtained thresholds are applied to classify the season peak value of the next season. Depending on the exact specification, thresholds can be applied either to the raw peak value $x_{m + 1}^{\text{raw}, (1)}$ or the smoothed version $x_{m + 1}^{\text{smo}, (1)}$.
+\item \textbf{Application of thresholds:} The obtained thresholds are applied to classify the season peak value of the $(m + 1)-th$ season. Depending on the exact specification, thresholds can be applied either to the raw peak value $x_{m + 1}^{\text{raw}, (1)}$ or the smoothed version $x_{m + 1}^{\text{smo}, (1)}$.
 \end{enumerate}
 
 \noindent The MEM and WHO methods are special cases of this procedure, see also overview in Table \ref{tab:differences}. In the MEM method, no smoothing is applied and the default data transformation $f$ is the natural logarithm.  \cite{Vega2015} recommend to use $5 \leq m \leq 10$ seasons to ensure a recent data basis. The number of observations included per season is set to $n = 30/m$, rounded to the nearest integer (with a minimum value of $n = 1$). The total number of historical observations is thus kept approximately fixed. We note that this description refers to the specification from \cite{Vega2015}, which is also reflected in the default settings of the accompanying R package \texttt{mem} \citep{Lozano2020}. The package, however, permits the user to choose $n$, $m$, and $f$ (\texttt{i.type.intensity	= 5} for no transformation, \texttt{i.type.intensity = 6} for the log transformation), thus offering considerable flexibility. We note that while \texttt{mem} does not currently allow for data smoothing using a moving average, alternatives like LOESS (locally estimated scatterplot smoothing) are available. % The term \textit{moving epidemic method} could thus also be used as an umbrella term for the general procedure described above. We here use it in a more narrow sense for the specification from \cite{Vega2015}, reflected in the default settings of the \texttt{mem} package.
@@ -164,7 +164,7 @@ for $\alpha = 0.4, 0.9, 0.975$.
 The implementation of the WHO method in the publicly available \textit{WHO Average Curves} application \citep{WHO2023} likewise offers a lot of flexibility; our description is based on the default settings as of May 2023, as well as the description in \cite{WHO2014}. Smoothing of data prior to the computation of thresholds is recommended, with a default of $l = 3$ (adapted from a recommendation of $l = 4$ in \citealt[p68]{WHO2014}). Subsequently, $n = 1$ observation per season is used and by default no transformation is applied to the reference set. If peak incidences vary strongly across seasons, a log transformation is recommended. At least three historical seasons are required to compute thresholds, but it is noted that the ``accuracy of these thresholds should be expected to increase with the number of seasons of good quality data available'' \cite[p22]{WHO2023}. % \citep{WHO2017}.
 Thresholds are by default applied to unsmoothed new season peaks.
 
-Both the inclusion of multiple observations per season in the MEM ($n > 1$) and the smoothing of data in the WHO method ($l > 1$) can be seen as attempts to base estimation of thresholds on more data than just one peak value per historical season. This is intended to make estimation more stable. The impact of these strategies on the resulting thresholds will be discussed in Section \ref{sec:analytical_results}.
+Both the inclusion of multiple observations per season in the MEM ($n > 1$) and the smoothing of data in the WHO method ($l > 1$) can be seen as attempts to base thresholds on more data than just one peak value per historical season. This is intended to make estimation more stable. The impact of these strategies on the resulting thresholds will be discussed in Section \ref{sec:analytical_results}.
 
 
 % \item
@@ -213,10 +213,12 @@ To improve our understanding of the different settings in which the MEM and WHO 
 \toprule
 Region & Disease & Years covered & $m$ & $n$ & Percentiles & Authors\\
 \midrule
+Africa (25 countries) & influenza & varies & varies & varies & 40, 90, 97.5 & \cite{Igboh2021} \\
 Australia & ILI/influenza & 2012--2017 & 5 & 6 & 40, 90, 99 & \cite{Vette2018}\\
 Australia, Chile, & ILI/SARI & 2013--2019 & 6 & 5 & 40, 90, 97.5 & \cite{Sullivan2019}\\
 New Zealand,\\
 South Africa\\
+Bangladesh & influenza & 2016--2019 & 4 & 8 & 40, 90, 97.5 & \cite{AbaOud2021}\\
 Catalonia & ILI & 2010--2016 & 5 & 6 & ? & \cite{Basile2018}\\
 Catalonia & ILI & 2005--2018 & 12 & 3 & ? & \cite{Basile2019}\\
 Catalonia & ILI/influenza & 2010--2017 & 7 & 4 & ? & \cite{Torner2019}\\
@@ -224,9 +226,12 @@ Egypt & SARI/ILI & 2010--2017 & 6 & 5 & 40, 90, 97.5 & \cite{AbdElGawad2020}\\
 Egypt & SARI & 2013--2015 & 3 & 10 & ? & \cite{Elhakim2019}\\
 England & ILI & 2010--2016 & 6 & 5 & ? & \cite{Wagner2018}\\
 Finland & influenza & 2011--2016 & 5 & 6 & ? & \cite{Pesaelae2019}\\
+Mexico & resp. dis. short-term& 2015--2019 & 5 & 6 & 40, 90, 97.5 & \cite{HernandezAvila2022}\\
+& disability claims\\
 Montenegro & ILI & 2010--2018 & 7 & 4 & 40, 90, 97.5 & \cite{Rakocevic2019}\\
 Morocco & ILI & 2005--2017 & 11 & 3 & 40, 90, 97.5 & \cite{Rguig2020}\\
 Netherlands & RSV & 2005--2017 & 12 & 3 & 40, 90, 97.5 & \cite{Vos2019}\\
+New Zealand & SARI, ILI, influenza & 2015-2019 & 5 & 6 & 40, 90, 97.5 & \cite{Wood2021}\\
 Norway & influenza & 2006--2015 & 9 & 3 & ? & \cite{Benedetti2019}\\
 Pakistan & ILI, SARI & 2008--2017 & 10 & 3 & 40, 90, 97.5 & \cite{Nisar2020}\\
 Portugal & ILI & 2012--2017 & 5 & 6 & 40, 90, 97.5 & \cite{Pascoa2018}\\
@@ -241,6 +246,7 @@ United Kingdom & ILI/RSV & 2011--2018 & 4--6 & 5--8 & 40, 90, 97.5 & \cite{Harco
 USA & ILI/influenza & 2003--2015 & 11 & 3 & 50, 90, 98 & \cite{Biggerstaff2017}\\
 USA & ILI & 2010--2015 & 5 & 6 & 50, 90, 98 & \cite{Dahlgren2018}\\
 USA & influenza & 2010--2016 & 6 & 5 & 50, 90, 98 & \cite{Dahlgren2019}\\
+USA & all-cause mortality & 2013--2020 & 7 & 3 & 50, 95, 99.5 & \cite{Dahlgren2022}\\
 \bottomrule\\
 \multicolumn{7}{c}{(b) WHO method}\\ \\
 \toprule
@@ -259,7 +265,7 @@ Victoria/Australia & ILI & 2002--2011 & 6--10 & 1 & 90, 95 & \cite{Tay2013}\\
 \section{Analytical results on statistical properties}
 \label{sec:analytical_results}
 
-Both the MEM and WHO method essentially serve to estimate quantiles of the distribution of season peak values ($q_{X, 0.4}, q_{X, 0.9}, q_{X, 0.975}$) from historical data. In the following we obtain some analytical results on how the estimators ($\hat{q}_{X, 0.4}, \hat{q}_{X, 0.9}, \hat{q}_{X, 0.975}$) behave under different variations of the procedure outlined in Section \ref{sec:definitions}. In all cases we will simplifyingly assume that the available historical seasons are independent realizations of the same random process, i.e., we ignore time trends, correlations between neighbouring seasons and other changes in seasonal patterns. To highlight that we treat all incidence values as random rather than observed variables in this section, we will denote them by capital rather than lowecase letters (e.g., $X_j^{(i)}$ rather than $x_j^{(i)}$). All derivations are provided in Supplement \ref{appendix:derivations}.
+Both the MEM and WHO method essentially serve to estimate quantiles of the distribution of season peak values ($q_{X, 0.4}, q_{X, 0.9}, q_{X, 0.975}$) from historical data. In the following we obtain some analytical results on how the estimators ($\hat{q}_{X, 0.4}, \hat{q}_{X, 0.9}, \hat{q}_{X, 0.975}$) behave under different variations of the procedure outlined in Section \ref{sec:definitions}. In all cases we will simplifyingly assume that the available historical seasons are independent realizations of the same random process, i.e., we ignore time trends, correlations between neighbouring seasons and other changes in seasonal patterns. To highlight that we treat all incidence values as random rather than observed variables in this section, we will denote them by capital rather than lowercase letters (e.g., $X_j^{(i)}$ rather than $x_j^{(i)}$). All derivations are provided in Supplement \ref{appendix:derivations}.
 
 
 \subsection{Choice of number $n$ of observations used per season}
@@ -267,22 +273,22 @@ Both the MEM and WHO method essentially serve to estimate quantiles of the distr
 
 We first consider the impact of the number $n$ of observations used per historical season. We assume that no smoothing is applied in Step 1 of the algorithm described in Section \ref{sec:definitions}. Denote by $\mathbf{Y}_j$ the random vector of the $n$ largest transformed incidence values from season $j$ in decreasing order, i.e.
 $$
-\mathbf{Y}_j = (Y^{(1)}_j, \dots, Y^{(n)}_j)^\top.
+\tilde{\mathbf{Y}}_j = (Y^{(1)}_j, \dots, Y^{(n)}_j)^\top.
 $$
 We assume that $\mathbf{Y}_1, \dots, \mathbf{Y}_m$ are identically and independently distributed, denoting their theoretical mean and covariance matrix of by
 \begin{align}
-\mathbb{E}\left(\mathbf{Y}_j\right) = \boldsymbol{\mu} = \left(\begin{array}{c}
+\mathbb{E}\left(\tilde{\mathbf{Y}}_j\right) = \boldsymbol{\mu} = \left(\begin{array}{c}
 \mu_1\\
 \vdots\\
 \mu_n
-\end{array}\right) \ \ \ \text{and} \ \ \ \text{Cov}\left(\mathbf{Y}_j\right) = \boldsymbol{\Sigma} =
+\end{array}\right) \ \ \ \text{and} \ \ \ \text{Cov}\left(\tilde{\mathbf{Y}}_j\right) = \boldsymbol{\Sigma} =
 \left(\begin{array}{ccc}
 \sigma_{1, 1} & \cdots & \sigma_{1, n}\\
 \vdots & \ddots &\vdots\\
 \sigma_{n, 1} & \cdots & \sigma_{n, n}
 \end{array}\right).
 \end{align}
-To make notation more intuitive we also write $\sigma^2_i = \sigma_{i, i}$. Construction of thresholds is based on the reference set $\mathcal{Y}$, which pools the elements of the vectors $\mathbf{Y}_1, \dots, \mathbf{Y}_m$. It can be shown that the expectations of the empirical mean $\bar{Y}$ and variance $S^2$ of the observations in the reference set (see in equation) \eqref{eq:moments} are given by
+To make notation more intuitive we also write $\sigma^2_i = \sigma_{i, i}$. Construction of thresholds is based on the reference set $\mathcal{Y}$, which pools the elements of the vectors $\tilde{\mathbf{Y}}_1, \dots, \tilde{\mathbf{Y}}_m$. It can be shown that the expectations of the empirical mean $\bar{Y}$ and variance $S^2$ of the observations in the reference set (see in equation \eqref{eq:moments}) are given by
 \begin{align}
 \mathbb{E}(\bar{Y}) & = \frac{1}{n} \sum_{i = 1}^n \mu_i,
 \label{eq:expectation_mu}\\
@@ -306,7 +312,7 @@ usually holds in good approximation in our applied setting if the transformation
 $$
 \mathbb{E}(\hat{q}_{Y, \alpha}) \approx \mu_1 + z_\alpha \sigma_1 = q_{Y, \alpha},
 $$
-where the second equality holds only if the transformed peak values $Y_{j}^{(1)}$ indeed come from a normal distribution.  This is a desirable property as our estimator of the relevant quantile is approximately unbiased. In expectation, thresholds on the transformed scale are thus such that the nominal threshold exceedance probabilities (60\%/10\%/2.5\%) are achieved. If a different value $n > 1$ is chosen, this will generally no longer be the case. Equations \eqref{eq:expectation_mu}--\eqref{eq:expectation_q} tell us by how much $\hat{q}_{Y, \alpha}$ can then be expected to differ from $q_{Y, \alpha}$. By the definition of $\mu_i$ as the expectation of the $i$-th largest observation in a given season, $\mathbb{E}(\bar{Y})$ decreases in $n$. While the expected thresholds also depend on $\mathbf{\Sigma}$, this downward bias will usually translate to the $\hat{q}_{Y, \alpha}$. As a consequence, when choosing $n > 1$, one must expect to classify a larger number of season peaks as high or very high intensity. Intuitively speaking, extending the reference by observations which are close to peaks, but not actually peaks, dilutes the reference set and pulls thresholds downward. When choosing $n = 30/m$ as suggested for the MEM, thresholds will tend to increase the more years of data are used to compute thresholds, and the probability of exceeding thresholds will decrease (approaching the nominal values from above). 
+where the second equality holds only if the transformed peak values $Y_{j}^{(1)}$ indeed come from a normal distribution.  This is a desirable property as our estimator $\hat{q}_{Y, \alpha}$ of $q_{Y, \alpha}$ is approximately unbiased. In expectation, thresholds on the transformed scale are thus such that the nominal threshold exceedance probabilities (60\%/10\%/2.5\%) are achieved. If a different value $n > 1$ is chosen, this will generally no longer be the case. Equations \eqref{eq:expectation_mu}--\eqref{eq:expectation_q} tell us by how much $\hat{q}_{Y, \alpha}$ can then be expected to differ from $q_{Y, \alpha}$. By the definition of $\mu_i$ as the expectation of the $i$-th largest observation in a given season, $\mathbb{E}(\bar{Y})$ decreases in $n$. While the expected thresholds also depend on $\mathbf{\Sigma}$, this downward bias will usually translate to the $\hat{q}_{Y, \alpha}$. As a consequence, when choosing $n > 1$, one must expect to classify a larger number of season peaks as high or very high intensity. Intuitively speaking, extending the reference set by observations which are close to peaks, but not actually peaks, dilutes the reference set and pulls thresholds downward. When choosing $n = 30/m$ as suggested for the MEM, thresholds will tend to increase the more years of data are used to compute thresholds, and the probability of exceeding thresholds will decrease (approaching the nominal values from above). 
 
 % Intuitively speaking, if $n = 1$ one observation per season is used, the reference set contains only actual peak values. The set may thus be small, but only contains observations which -- being season peaks themselves -- provide a good reference for future peaks. If $n > 1$, the set becomes larger, but at the cost of a systematic downward bias resulting from the inclusion of non-peak weeks.
 
@@ -316,30 +322,28 @@ where the second equality holds only if the transformed peak values $Y_{j}^{(1)}
 \label{subsec:smoothing}
 
 Next we assess the role of smoothing historical data prior to computing thresholds. As derivations get tedious otherwise, we only consider the case where $f$ is the identity function, i.e., no transformation is applied to the reference set and thus $
-Y^{(i)}_j = X^{(i)}_j$. Also, as smoothing and multiple observations per season are generally not used in parallel we assume $n = 1$.
-
-Now denote by $p_j$ the peak week of the smoothed incidence in season $j$ such that $X_j^{(1)} = X^{\text{smo}}_{j, p_j}$; and by
+Y^{(i)}_j = X^{(i)}_j$. Also, as smoothing and multiple observations per season are generally not used in parallel we assume $n = 1$. Now denote by $p_j$ the peak week of the smoothed incidence in season $j$ such that
+\begin{equation}
+Y_j^{(1)} =  X_j^{(1)} = X^{\text{smo}}_{j, p_j} = \frac{1}{l} \sum_{d = 0}^{l - 1} X^{\text{raw}}_{j, p_j - d}.\label{eq:Y_1_smoothing}
+\end{equation}
+Moreover, we define a random vector containing the observations $X^{\text{raw}}_{j, p_j}, \dots, X^{\text{raw}}_{j, p_j - l + 1}$ which average to $Y_j^{(1)}$ in decreasing order,
 $$
-\mathbf{X}^\text{raw}_j = (X_j^{\text{raw}, (1)}, \dots, X_j^{\text{raw}, (l)})^\top
+\tilde{\mathbf{X}}^\text{raw}_j = \begin{pmatrix} \tilde{X}_j^{\text{raw}, (1)} & = \ \ \max(X^{\text{raw}}_{j, p_j}, \dots, X^{\text{raw}}_{j, p_j - l + 1}) \\ \vdots & \vdots \\ X_j^{\text{raw}, (l)} & = \ \ \min(X^{\text{raw}}_{j, p_j}, \dots, X^{\text{raw}}_{j, p_j - l + 1}) \end{pmatrix}.
 $$
-the random vector containing the raw observations $X^\text{raw}_{j, p_j - l + 1}, X^\text{raw}_{j, p_j - l + 2}, \dots, X^\text{raw}_{j, p_j}$ in decreasing order. The vector $\mathbf{X}^\text{raw}_j$ is thus a re-ordering of the raw observations making up the smoothed peak value. The theoretical mean and covariance matrix of $\mathbf{X}^\text{raw}_j$ are denoted by
+The theoretical mean and covariance matrix of $\mathbf{X}^\text{raw}_j$ are denoted by
 \begin{align}
-\mathbb{E}\left(\mathbf{X}^\text{raw}_j\right) = \boldsymbol{\mu}^\text{raw} = \left(\begin{array}{c}
+\mathbb{E}\left(\tilde{\mathbf{X}}^\text{raw}_j\right) = \boldsymbol{\mu}^\text{raw} = \left(\begin{array}{c}
 \mu^\text{raw}_1\\
 \vdots\\
-\mu^\text{raw}_n
-\end{array}\right) \ \ \ \text{and} \ \ \ \text{Cov}\left(\mathbf{X}^\text{raw}_j\right) = \boldsymbol{\Sigma}^\text{raw} =
+\mu^\text{raw}_l
+\end{array}\right) \ \ \ \text{and} \ \ \ \text{Cov}\left(\tilde{\mathbf{X}}^\text{raw}_j\right) = \boldsymbol{\Sigma}^\text{raw} =
 \left(\begin{array}{ccc}
-\sigma^\text{raw}_{1, 1} & \cdots & \sigma^\text{raw}_{1, n}\\
+\sigma^\text{raw}_{1, 1} & \cdots & \sigma^\text{raw}_{1, l}\\
 \vdots & \ddots &\vdots\\
-\sigma^\text{raw}_{n, 1} & \cdots & \sigma^\text{raw}_{n, n}
+\sigma^\text{raw}_{l, 1} & \cdots & \sigma^\text{raw}_{l, l}
 \end{array}\right),
 \end{align}
-respectively. Note that by construction we have $\mu^\text{raw}_1 \geq \mu^\text{raw}_2 \geq \dots > \mu^\text{raw}_l$. As we assumed $f$ to be the identity and $n = 1$, the reference set $\mathcal{Y}$ consists simply of $Y^{(1)}_1, \dots, Y^{(1)}_m$ with
-$$
-Y^{(1)}_j = X^{\text{smo}}_{j, p_j} = \frac{1}{l} \sum_{d = 1}^l X^{\text{raw}, (i)}_{j},
-$$
-i.e., the average values of $\mathbf{X}^\text{raw}_{1}, \dots, \mathbf{X}^\text{raw}_{m}$. It is straightforward to show that in this case the expectations of $\bar{Y}$ and $S^2$ are
+respectively. Note that by construction we have $\mu^\text{raw}_1 \geq \mu^\text{raw}_2 \geq \dots > \mu^\text{raw}_l$. As we assumed $n = 1$, the reference set $\mathcal{Y}$ consists simply of $Y^{(1)}_1, \dots, Y^{(1)}_m$ as given in equation \eqref{eq:Y_1_smoothing}. It is straightforward to show that in this case the expectations of $\bar{Y}$ and $S^2$ are
 \begin{align}
 \mathbb{E}(\bar{Y}) = \frac{1}{l} \sum_{i = 1}^l \mu^\text{raw}_i, \ \ \ 
 \mathbb{E}(S^2) = \frac{1}{l^2} \sum_{i = 1}^l \sum_{i' = 1}^l \sigma^\text{raw}_{i', i}.
@@ -350,8 +354,8 @@ These can be plugged into equation \eqref{eq:expectation_q} to approximate the e
 \mathbb{E}(\hat{q}_{Y, \alpha}) \approx \mathbb{E}(\bar{Y}) + z_\alpha \sqrt{\mathbb{E}(S^2)} \approx \mu^\text{raw}_1 + z_\alpha \sigma^\text{raw}_1.
 \label{eq:expected_threshold_smooth}
 \end{equation}
-Now assume that the peak of the raw time series is always part of the vector $\mathbf{X}_j^\text{raw}$ and thus has mean $\mu^\text{raw}_1$ and standard deviation $\sigma^{2, \text{raw}}_1$. This will typically be the case if a season presents one well-shaped peak. If in addition the normality assumption holds, then equation \eqref{eq:expected_threshold_smooth} implies that the threshold $\hat{q}_\alpha$ is again approximately unbiased. % in the sense that in expectation they are such that the unsmoothed peak of a new season will exceed them with the intended probabilities (60\%/10\%/2.5\%).
-For $l > 1$ we get by construction $\mathbb{E}(\bar{Y}) \leq \mu^\text{raw}_1$ and usually also $\mathbb{E}(\sqrt{S^2}) \leq \sigma^\text{raw}_1$. In practice both are likely to hold in strict inequality. The high and very high thresholds will thus be lower than for $l = 1$ and exceeded more frequently by unsmoothed new peaks. If thresholds are applied to new smoothed peak values, though, the nominal exceedance probabilities will be achieved in expectation as the mean and variance of the smoothed peak values correspond to the expressions from equation \eqref{eq:expectation_moments_smoothing}.
+Now assume that the peak of the raw time series is always part of the vector $\mathbf{X}_j^\text{raw}$ and thus has mean $\mu^\text{raw}_1$ and standard deviation $\sigma^{2, \text{raw}}_1$. This will typically be the case if a season presents one well-shaped peak. If in addition the normality assumption holds and $q_{Y, \alpha} = \mu_1^\text{raw} + z_\alpha \sigma_1^\text{raw}$, then equation \eqref{eq:expected_threshold_smooth} implies that the threshold $\hat{q}_\alpha$ is again approximately unbiased. % in the sense that in expectation they are such that the unsmoothed peak of a new season will exceed them with the intended probabilities (60\%/10\%/2.5\%).
+For $l > 1$ we get by construction $\mathbb{E}(\bar{Y}) \leq \mu^\text{raw}_1$ and usually also $\mathbb{E}(\sqrt{S^2}) \leq \sigma^\text{raw}_1$. In practice both are likely to hold in strict inequality. The high and very high thresholds will thus be lower than for $l = 1$ and exceeded more frequently by unsmoothed new peaks. If thresholds are applied to new smoothed peak values, though, this problem is avoided as the mean and variance of the smoothed peak values correspond to the expressions from equation \eqref{eq:expectation_moments_smoothing}.
 
 As in Section \ref{subsec:choice_n}, the key aspect is that the reference set need to be comparable to new peaks; both smoothed peak values and values which are close to, but not actually peaks are systematically different from new unsmoothed peak values. They are thus not suitable as reference values, and the resulting thresholds will be biased. While we did not adapt our derivation to the case where data are log-transformed prior to computing thresholds, our simulation results in Section \ref{subsec:sim_smoothing} confirm that the described qualitative patterns likewise hold.
 
@@ -379,12 +383,12 @@ Y_{m + 1}^{(1)} \geq \hat{q}_{Y, \alpha}.
 $$
 Note that we here treat both $Y_{m + 1}^{(1)}$ and $\hat{q}_{Y, \alpha}$ as random. It can be shown that the probability in question can be approximated by
 \begin{equation}
-\text{sens}_\alpha = \text{Pr}(Y_{m + 1}^{(1)} > \hat{q}_{Y, \alpha} \ \mid \ Y_{m + 1}^{(1)} > q_{Y, \alpha}) \approx \int_{z_\alpha}^\infty \phi(x) \times \Phi\left(\frac{x - z_\alpha}{\sqrt{\frac{1}{m} + \frac{z_\alpha^2}{2(m - 1)}}}\right) \text{d}x,
+\text{sens}_\alpha = \text{Pr}(Y_{m + 1}^{(1)} > \hat{q}_{Y, \alpha} \ \mid \ Y_{m + 1}^{(1)} > q_{Y, \alpha}) \approx \int_{z_\alpha}^\infty \phi(y) \times \Phi\left(\frac{y - z_\alpha}{\sqrt{\frac{1}{m} + \frac{z_\alpha^2}{2(m - 1)}}}\right) \text{d}y,
 \label{eq:sens}
 \end{equation}
 where $\phi$ and $\Phi$ are the standard normal density function and cumulative density function, respectively. We note that this expression only depends on $\alpha$, but not $\mu_1$ and $\sigma^2_1$. Similarly, the specificity can be approximated by
 \begin{equation}
-\text{spec}_\alpha = \text{Pr}(Y_{m + 1}^{(1)} < \hat{q}_\alpha \ \mid \ Y_{m + 1}^{(1)} < q_{Y, \alpha}) \approx \int_{-\infty}^{z_\alpha}\phi(x) \times \left[1 - \Phi\left(\frac{x - z_\alpha}{\sqrt{\frac{1}{m} + \frac{z_\alpha^2}{2(m - 1)}}}\right)\right] \text{d}x.
+\text{spec}_\alpha = \text{Pr}(Y_{m + 1}^{(1)} < \hat{q}_\alpha \ \mid \ Y_{m + 1}^{(1)} < q_{Y, \alpha}) \approx \int_{-\infty}^{z_\alpha}\phi(y) \times \left[1 - \Phi\left(\frac{y - z_\alpha}{\sqrt{\frac{1}{m} + \frac{z_\alpha^2}{2(m - 1)}}}\right)\right] \text{d}y.
 \label{eq:spec}
 \end{equation}
 The positive predictive value can be computed using the common formula
@@ -392,7 +396,7 @@ The positive predictive value can be computed using the common formula
 \text{PPV}_\alpha = \text{Pr}(Y_{m + 1}^{(1)} > q_{Y, \alpha} \ \mid Y_{m + 1}^{(1)} > \hat{q}_\alpha) = \frac{(1 - \alpha) \times \text{sens}_\alpha}{(1 - \alpha) \times \text{sens}_\alpha + \alpha \times (1 - \text{spec}_\alpha)}.
 \label{eq:ppv}
 \end{equation}
-Neither of these expressions has any simpler closed form, but they are straightforward to evaluate numerically. We visualize the resulting curves in Figure \ref{fig:sens_spec_ana}. As the approximations are derived under the assumption of large $m$ while in our setting $m$ is typically small, we also show simulation-based versions. The simulations indicate that the theoretical sensitivity for small $m$ is slightly higher than in the approximation, but otherwise agreement is quite close. Little surprisingly, the sensitivity, specificity and positive predictive values increase in $m$. The sensitivity and PPV are lowest for the very high threshold at $\alpha = 0.975$. For the most practically relevant values of $5 \leq m \leq 10$, the PPV is only between 0.25 and 0.4 in this case. More than half of the seasons flagged as very high intensity will thus be false positives. For the high threshold ($\alpha = 0.9$), the respective PPVs are between 0.5 and 0.6. Even if the underlying normality assumptions are fulfilled, there are thus natural limits to the classification performance, which for small $m$ and high $\alpha$ is at relatively modest levels. We note that this general theoretical result is the same irrespective of
+Neither of these expressions has any simpler closed form, but they are straightforward to evaluate numerically. We visualize the resulting curves in Figure \ref{fig:sens_spec_ana}. As the approximations are derived under the assumption of large $m$ while in our setting $m$ is typically small, we also show simulation-based versions. The simulations indicate that the theoretical sensitivity for small $m$ is slightly higher than in the approximation, but otherwise agreement is quite close. Little surprisingly, the sensitivity, specificity and positive predictive values increase in $m$. The sensitivity and PPV are lowest for the very high threshold at $\alpha = 0.975$. For the most practically relevant values of $5 \leq m \leq 10$, the PPV is only between 0.25 and 0.4 in this case. More than half of the seasons flagged as very high intensity will thus be false positives, i.e., peaks which are not actually among the highest 2.5\%. For the high threshold ($\alpha = 0.9$), the respective PPVs are between 0.5 and 0.6. Even if the underlying normality assumptions are fulfilled, there are thus natural limits to the classification performance, which for small $m$ and high $\alpha$ is at rather modest levels. We note that this general theoretical result is the same irrespective of
  whether smoothing has been applied to all peaks in question or not. While smoothing will usually make thresholds less variable, any effect on sensitivity and specificity is canceled out by the fact that smoothed new peaks are likewise less variable.
 
 \begin{figure}
@@ -432,8 +436,8 @@ The analytical results from Section \ref{sec:analytical_results} involve some si
 \item Restrict the generated sequence to the first $m$ seasons.
 \item Compute thresholds for medium ($\alpha = 0.4$), high ($\alpha = 0.9$) and very high intensity ($\alpha = 0.975$). This is done using a number of variations of the thresholding procedure, see below.
 \item Evaluate which of the $M$ historical season peaks would be classified as low, moderate, high and very high.
-\item Compute relevant summary statistics including mean thresholds, exceedance probabilities, sensitivities, specificities and positive predictive values.
 \end{itemize}
+\item Compute relevant summary statistics including mean thresholds, exceedance probabilities, sensitivities, specificities and positive predictive values.
 \end{itemize}
 The range $m =5, \dots, 15$ is motivated by the values found in real-world applications, see overview in Section \ref{sec:review}. We apply a total of eight variations of the general approach described in Section \ref{sec:definitions} to the generated data.
 \begin{enumerate}
@@ -477,7 +481,7 @@ obtained via the CDC \textit{FluSight} influenza forecasting platform (\url{http
 
 \subsubsection{Choice of transformation $f$ and number $n$ of observations used per season}
 
-Figure \ref{fig:results1} summarizes thresholds resulting from different combinations of transformation function $f$ and number $n$ of observations used per season (specifications a--d from Section \ref{subsec:simulation_setup}). For each case we show mean thresholds, along with the empirical 5\% and 95\% quantiles, and the shares of new seasons classified into the different categories. This is complemented with summaries of the sensitivity, specificity and positive predictive value. All results are shown as a function of the number $m$ of historical seasons used. Where applicable, analytical approximations are shown as lines. These have been computed using equations \eqref{eq:expectation_q2} (with empirical means and covariances plugged in) and \eqref{eq:sens}--\eqref{eq:ppv}.
+Figure \ref{fig:results1} summarizes thresholds resulting from different combinations of transformation function $f$ and number $n$ of observations used per season (specifications a--d from Section \ref{subsec:simulation_setup}). For each case we show mean thresholds, along with the empirical 5\% and 95\% quantiles, and the shares of new seasons classified into the different categories. This is complemented with summaries of the sensitivity, specificity and positive predictive value. All results are shown as a function of the number $m$ of historical seasons used. Where applicable, the simulation results displayed as squares are complemented by analytical approximations shown as lines. These have been computed using equations \eqref{eq:expectation_q2} (with empirical means and covariances plugged in) and \eqref{eq:sens}--\eqref{eq:ppv}.
 
 \begin{figure}[h!]
 \centering
@@ -489,16 +493,16 @@ Figure \ref{fig:results1} summarizes thresholds resulting from different combina
 \label{fig:results1}
 \end{figure}
 
-\textbf{Thresholds and threshold exceedance.} Thresholds for high and very high intensity are higher when a log transformation is employed. This leads to better calibration, i.e., the shares of seasons exceeding the high or very high thresholds are closer to the intended levels of 10\% and 2.5\%. Indeed, when using $n = 1$ observation per season and $m \geq 10$ historical seasons, the thresholds based on log-transformed data have very close to nominal exceedance rates. Without this transformation, new season peaks are classified as very high in roughly 10\% rather than 2.5\% of the cases. This indicates that the normal assumption is more appropriate after log tansformation, an aspect that already became visible from the normal QQ plot in Figure \ref{fig:data}.
+\textbf{Thresholds and threshold exceedance.} Thresholds for high and very high intensity are higher when a log transformation is employed. This leads to better calibration, i.e., the shares of seasons exceeding the high or very high thresholds are closer to the intended levels of 10\% and 2.5\%. Indeed, when using $n = 1$ observation per season and $m \geq 10$ historical seasons, the thresholds based on log-transformed data have close to nominal exceedance rates. Without this transformation, new season peaks are classified as very high in roughly 10\% rather than 2.5\% of the cases. This indicates that the normal assumption is more appropriate after log tansformation, an aspect that already became visible from the normal QQ plot in Figure \ref{fig:data}.
 
-As implied by the reasoning from Section \ref{subsec:choice_n}, letting the number of observations used per season depend on the number of available seasons via $n = 30/m$ leads to average thresholds which increase in $m$. When using a log transformation, they increase from 180 for $m = 5, n = 6$ to 218 for $m = 10, n = 3$ and 140 for $m = 15, n = 2$. For $n = 1$, in which case thresholds can be interpreted as unbiased (Section \ref{subsec:choice_n}), the average is around 270 and largely independent of $m$. Including historical observations which are not actual peaks thus leads to a considerable lowering of alarm thresholds and increases the number of alerts for high and very high influenza activity. For $m = 5, n = 6$ the proportion of seasons classified as very high is 15\% if a log transformation is used and 24\% otherwise. As can be seen from the fourth column, this is due to poor specificity, and as shown in the fifth column, leads to low positive predictive values. In the most extreme case where $m = 5$ seasons are used without a transformation, only one in ten seasons classified as very high is actually from the 2.5\% most extreme seasons. We note, however, that even the most well-behaved specification with $n = 1$ and a log transformation only yields a PPV slightly above 20\% for $m = 5$. For $m = 15$ this value roughly doubles. Our theoretical approximation is well aligned with the simulation results here (but much less so if no log transformation is used, as in this case the normality assumption is poorly fulfilled).
+As implied by the reasoning from Section \ref{subsec:choice_n}, letting the number of observations used per season depend on the number of available seasons via $n = 30/m$ leads to average thresholds which increase in $m$. When using a log transformation, they increase from 180 for $m = 5, n = 6$ to 218 for $m = 10, n = 3$ and 140 for $m = 15, n = 2$. For $n = 1$, in which case thresholds can be interpreted as unbiased (Section \ref{subsec:choice_n}), the average is around 270 and largely independent of $m$. Including historical observations which are not actual peaks thus leads to a considerable lowering of alarm thresholds and increases the number of alerts for high and very high influenza activity. For $m = 5, n = 6$ the proportion of season peaks classified as very high is 15\% if a log transformation is used and 24\% otherwise. As can be seen from the fourth column, this is due to poor specificity, and as shown in the fifth column, leads to low positive predictive values. In the most extreme case where $m = 5$ seasons are used without a transformation, only one in ten seasons peaks classified as very high is actually from the 2.5\% most extreme peaks. We note, however, that even the most well-behaved specification with $n = 1$ and a log transformation only yields a PPV slightly above 20\% for $m = 5$. For $m = 15$ this value roughly doubles. Our theoretical approximation is well aligned with the simulation results here (but much less so if no log transformation is used, as in this case the normality assumption is poorly fulfilled).
 
 
 It can be noted that the thresholds generally have high variability (see the shaded bands in the first column of Figure \ref{fig:results1}). This is particularly pronounced for the very high threshold, and even more so if a logarithmic transformation is used. This reflects the general difficulty of estimating extreme quantiles from a small number of observations.
 
 \textbf{Confusion matrices.} To complement these results and provide some more intuition on the intensity classifications, Figure \ref{fig:mosaic} shows confusion matrices for thresholds computed with a log transformation and different values of $m$. This represents a more detailed breakup of the results from the second column of Figure \ref{fig:results1}. Note that the perspective differs somewhat from the computation of sensitivities and specificities. There, we focused on \textit{threshold exceedance}, considering for instance whether the medium threshold was exceeded or not by a peak which was truly at least medium intensity. For the sensitivity of the medium threshold we thus ignored whether a peak which was truly medium intensity also exceeded the high threshold (which was in turn reflected in the specificity of the high threshold). Now we consider not just threshold exceedance, but the exact categorization. This is shown stratified by the true category of a peak, determined via the empirical distribution of all peaks (the highest 2.5\% are considered very high, the next 7.5\% high, the next 50\% medium and the remaining 40\% low).
 
-For $n = 1$ (top two rows) it can be seen that in all categories misclassifications occur, but become somewhat less frequent for larger $m$. The log transformation yields better classification of truly medium and high peaks, while for truly low or very high peaks results are better without a transformation. This essentially reflects the fact that thresholds are more spaced out when using a log transformation (see Figure \ref{fig:results1}), giving medium and high peaks a better chance of correct classification. The rather modest positive predictive values from Figure \ref{fig:results1} are here reflected by the fact that in most panels, a large part of the peaks classified as very high (purple rectangles) are actually high or medium.
+For $n = 1$ (top two rows) it can be seen that in all categories misclassifications occur, but become somewhat less frequent for larger $m$. The log transformation leads to better classification of truly medium and high peaks, while for truly low or very high peaks results are better without a transformation. This essentially reflects the fact that thresholds are more spaced out when using a log transformation (see Figure \ref{fig:results1}), giving medium and high peaks a better chance of correct classification. The rather modest positive predictive values from Figure \ref{fig:results1} are here reflected by the fact that in most panels, a large part of the peaks classified as very high (purple rectangles) are actually high or medium.
 
 For $n = 30/m$, the miscalibration issues identified previously are again visible. For $m = 5$ and with a log transformation, more than 60\% of truly low peaks are classified as medium; roughly 40\% of medium peaks are classified as high or very high; and close to 75\% of high peaks are classified as very high. Similar pictures arise for thresholds computed on the natural scale, while as implied by theory, the problem is diminished with increasing $m$.
 
@@ -543,8 +547,8 @@ For $n = 30/m$, the miscalibration issues identified previously are again visibl
 \begin{center}
 \includegraphics[width=0.9\textwidth]{figure/mosaic_log_smoothed_fr.pdf}
 \caption{Confusion matrices for intensity classifications obtained with a smoothing window of width $l = 3$ and a log transformation. Top: thresholds applied to unsmoothed new peaks; bottom: thresholds applied to smoothed new peaks. Mosaic plots show which fractions of season peaks which are truly very high, high, medium or low are classified into the four categories, see camption of Figure \ref{fig:mosaic} for details.}
-\end{center}
 \label{fig:mosaic_smoothing}
+\end{center}
 \end{figure}
 
 
@@ -570,30 +574,30 @@ The results obtained using the US data are overall very well aligned with those 
 
 \subsection{Practical recommendation}
 
-We provided a statistical assessment of implementation choices in a widely used framework for the computation of influenza intensity thresholds. Our practical recommendation in light of the theoretical and empirical findings is as follows. We suggest including just one observation per season into the reference set and employing a log transformation. To make thresholds somewhat less variable, data can be smoothed using a moving average with $l = 3$. If smoothing is applied the resulting thresholds should be applied to new data smoothed using the same procedure. % We found that log transforming incidences prior to the computation of thresholds led to better behaved thresholds and closer to nominal exceedance rates. Concerning the question of how many observations per historical season should be included to compute thresholds, we found that the common choice $n = 30/m$ results in too low thresholds when few historical seasons are available. We therefore recommend adopting $n = 1$ irrespective of the number of available historical seasons. This is possible in the \texttt{R} package \texttt{mem} by setting \texttt{i.n.max = 1} when the function \texttt{memmodel} is called. Smoothing historical data prior to the computation of thresholds leads to somewhat less variable thresholds. However, it is important that the same smoothing procedure is also applied to new data before classifying the peak intensity. Otherwise a too large number of thresholds is classified as high or very high. We discourage the use of thresholds based on confidence intervals as they lead to an excessive number of seasons being classified as ``very high''.
+We provided a statistical assessment of implementation choices in a widely used framework for the computation of influenza intensity thresholds. Our practical recommendation in light of the theoretical and empirical findings is as follows. We suggest including only $n = 1$ observation per season into the reference set and employing a log transformation. To make thresholds somewhat less variable, data can be smoothed using a moving average with $l = 3$. If smoothing is employed, the resulting thresholds should be applied to new data smoothed using the same procedure. % We found that log transforming incidences prior to the computation of thresholds led to better behaved thresholds and closer to nominal exceedance rates. Concerning the question of how many observations per historical season should be included to compute thresholds, we found that the common choice $n = 30/m$ results in too low thresholds when few historical seasons are available. We therefore recommend adopting $n = 1$ irrespective of the number of available historical seasons. This is possible in the \texttt{R} package \texttt{mem} by setting \texttt{i.n.max = 1} when the function \texttt{memmodel} is called. Smoothing historical data prior to the computation of thresholds leads to somewhat less variable thresholds. However, it is important that the same smoothing procedure is also applied to new data before classifying the peak intensity. Otherwise a too large number of thresholds is classified as high or very high. We discourage the use of thresholds based on confidence intervals as they lead to an excessive number of seasons being classified as ``very high''.
 
 \subsection{Further conclusions and outlook}
 
 For a more detailed conclusion we return to the criteria evoked in Section \ref{sec:desirable_properties}.
 
 \begin{description}
-\item \textbf{Calibration.} The key to well-calibrated thresholds is that the observations in the reference set need to be comparable to new season peaks. This implies that no historical non-peak values should be included (i.e., one should choose $n = 1$). Otherwise thresholds will be pulled downwards and exceeded too frequently by new peaks. If historical data are smoothed ($l > 1$), comparability should be ensured by applying the same smoothing to new season peaks. Otherwise thresholds will again tend to be exceeded too often. Empirically we found that thresholds computed on log-transformed observations were better calibrated; while further study is needed we expect this to translate to other settings as distributions of peak values are typically skewed.
-\item \textbf{Sensitivity and specificity.} Our theoretical and empirical results show that even if all assumptions are fulfilled, sensitivity and positive predictive values cannot be expected to exceed rather modest levels if $m$ is small. This aspect is unaffected by whether smoothing is applied or not and reflects the general difficulty of estimating extreme quantiles from few historical observations. Especially for the very high threshold at $\alpha = 0.975$, sensitivity and the PPV must be expected to be limited and it can be asked whether these thresholds are practically meaningful. In any case it does not seem advisable to add even more extreme thresholds to the procedure. This problem is in theory reduced if many historical seasons are available, but in practice there is a tradeoff with the recency and comparability of these data. If there are relelvant temporal trends or changes in surveillance systems, historical data may get outdated and their inclusion may not be helpful.
-\item \textbf{Stability.} The same difficulties limiting the sensitivity and PPV imply that thresholds must be expected to be rather variable if $m$ is small. Empirically we found that this is even more the case if a log transformation is employed. Smoothing of historical data helps to somewhat reduce the variability of thresholds (but without improving sensitivity or specificity).
-\item \textbf{Simplicity.} From a theoretical statistical standpoint the MEM and WHO methods are rather straightforward. However, informal exchange with users from public health indicates that given the large number of possible configurations, both methods are perceived as complex by practitioners. Our subjective opinion is that the methods overall strike a good balance here and that the demand for and practical benefits of more sophisticated methods may be limited. More specific guidance on how to choose the parameters of the methods and sensible default values are important to enable successful use of the methods.
-\item \textbf{Ease of practical application.} Both methods can be applied using graphical user interfaces and thus do not require programming knowledge. For the MEM this is set up on top of an open-source R package with good documentation. For more technically versed users we recommend using this package directly. Combined with minimal data pre-processing it covers all aspects discussed in the present paper and enhances the automation and reproducibility of computations (which are the main challenge for graphical user interfaces).
+\item \textbf{Calibration.} The key to well-calibrated thresholds is comparability of the reference set and new season peaks. This implies that no historical non-peak values should be included (i.e., one should choose $n = 1$). Otherwise thresholds will be pulled downwards and exceeded too frequently by new peaks. If historical data are smoothed ($l > 1$), comparability should be ensured by applying the same smoothing to new season peaks. Otherwise thresholds will again tend to be exceeded too often. Empirically we found that thresholds computed on log-transformed observations were better calibrated; while further study is needed we expect this to translate to other settings as distributions of peak values are typically skewed.
+\item \textbf{Sensitivity and specificity.} Our theoretical and empirical results show that even if all assumptions are fulfilled, sensitivity and positive predictive values of thresholds cannot be expected to exceed rather modest levels if $m$ is small. This aspect is unaffected by whether smoothing is applied and reflects the general difficulty of estimating extreme quantiles from few observations. Especially for the very high threshold at $\alpha = 0.975$, sensitivity and PPV must be expected to be modest and it can be asked whether these thresholds are practically meaningful. In any case it does not seem advisable to add even more extreme thresholds to the procedure. This problem is in theory reduced if many historical seasons are available, but in practice there is a tradeoff with the recency and comparability of these data. If there are relelvant temporal trends or changes in surveillance systems, historical data may get outdated and their inclusion may not be helpful.
+\item \textbf{Stability.} The same difficulties limiting the sensitivity and PPV imply that thresholds must be expected to be rather variable if $m$ is small. Empirically we found that this is even more the case if a log transformation is employed. Smoothing of historical data helps to somewhat reduce the variability of thresholds, but without improving sensitivity or specificity.
+\item \textbf{Simplicity.} From a theoretical statistical standpoint the MEM and WHO methods are straightforward. However, informal exchange with users from public health indicates that given the large number of possible configurations, both methods are perceived as complex by practitioners. Our subjective opinion is that the methods overall strike a good balance here and that the demand for more sophisticated methods may be limited. More specific guidance on how to choose the parameters of the methods and sensible default values is important to enable successful use of the methods.
+\item \textbf{Ease of practical application.} Both methods can be applied using graphical user interfaces and thus do not require programming knowledge. For the MEM this is set up on top of an open-source R package with excellent documentation. For more technically versed users we recommend using this package directly. Combined with minimal data pre-processing it covers all aspects discussed in the present paper and enhances the automation and reproducibility of computations.
 \end{description}
 
 
 % Our theoretical and empirical results highlight the general difficulty of estimating extreme quantiles of distributions from few historical observations. Even if the underlying assumptions are fulfilled, thresholds at $\alpha = 0.975$ will have modest positive predictive values. Inclusion of more historical seasons may help, but there is a tradeoff with the recency and comparability of these data. If there are relelvant temporal trends or changes in surveillance systems, historical data may get outdated and their inclusion may not be helpful. In light of these difficulties it can be asked whether the thresholds for very high incidence are practically meaningful. In any case it does not seem advisable to add even more extreme thresholds to the procedure.
 
-In the present work we aimed to assess properties of the MEM and WHO methods in their current forms. However, a number of additional questions arise. Firstly, we focused purely on the assessment of season peak values, which is a useful perspective for temperate regions with one clear influenza wave per season. It could be discussed whether this should be complemented with other indicators and how more complex seasonal patterns as occuring in tropical regions should be handled. One possible alternative indicator is the season total, which conveys a different perspective on the severity of an influenza season. In this context we note that by smoothing an incidence time series prior to extracting peak values, we actually assess longer ``peak periods'', thus also changing the considered indicator. Which indicators are most relevant is a public health question and difficult to answer from a purely statistical standpoint; further exchange between the different subjects is thus needed. % Thresholds specific to each calendar week could also be defined (as is done e.g., in the Serfling method, see \citealt{Serfling1963}). Their interpretation, however, may be hampered by the strong variability in influenza season timing.
+In the present work we aimed to assess properties of the MEM and WHO methods in their current forms. However, a number of additional questions arise. Firstly, we focused purely on the assessment of season peak values, which is a useful perspective for temperate regions with one clear influenza wave per season. It could be discussed whether this should be complemented with other indicators and how more complex seasonal patterns as occuring in tropical regions should be handled. One possible alternative indicator is the season total, which conveys a different perspective on the severity of an influenza season. In this context we note that by smoothing an incidence time series prior to extracting peak values, we actually assess longer ``peak periods'', thus also changing the considered indicator. Which indicators are most relevant is a public health question and difficult to answer from a purely statistical standpoint; further exchange between the different disciplines is thus needed. % Thresholds specific to each calendar week could also be defined (as is done e.g., in the Serfling method, see \citealt{Serfling1963}). Their interpretation, however, may be hampered by the strong variability in influenza season timing.
 
-Another general question is whether a categorization into four categories is the most practical way of conveying influenza activity. In principle it would also be possible to just report the percentile of the fitted distribution corresponding to a new peak. This would result in a continuous scale from 0 to 100, with higher values indicating higher intensity. However, given the previously discussed difficulties with estimating extreme quantiles, a percentile-based display may also convey a false sense of exactness.
+Another general question is whether a categorization into four categories is the most appropriate way of conveying influenza activity. An alternative is to report the percentile of the fitted distribution corresponding to a new peak. This would result in a continuous scale from 0 to 100, with higher values indicating higher intensity. However, given the previously discussed difficulties with estimating extreme quantiles, a percentile-based display may also convey a false sense of exactness.
 
-In our two empirical examples we found the normal distribution to provide a quite good fit to the distribution of log-transformed season peak incidences. However, it is unclear how generalizable this is. For indicators which represent fractions, like positivity percentages, it may not be a suitable choice as in principle the threshold for high or very high activity could be above 100\%. Then different transformations (like the logit) or distributional assumptions would be necessary. For the US ILI percentages, no practical problem arose, but this may well be the case for other indicators.
+In our two empirical examples we found the normal distribution to provide a quite good fit to the distribution of log-transformed season peak incidences. However, it is unclear how generalizable this is. For indicators which represent fractions, like positivity percentages, it may not be a suitable choice as in principle the threshold for high or very high activity could be above 100\%. Then different transformations like the logit or different distributional assumptions would be necessary. For the US ILI percentages, no practical problem arose, but this may well be the case for other indicators.
 
-A more technical question concerns how extreme seasons in the historical data should be handled. These can have a substantial effect on thresholds. In our simulation study we pragmatically removed observations from the pandemic season 2009/2010. However, a more principled approach to determining which historical seasons should be excluded would be desirable. As the same problem arises in outbreak detection, this strand of literature may be a helpful starting point (see e.g., \citealt{Noufaily2013}).
+Another technical question concerns how extreme seasons in the historical data should be handled. These can have a substantial effect on thresholds. In our simulation study we pragmatically removed observations from the pandemic season 2009/2010. However, a more principled approach to determining which historical seasons should be excluded would be desirable. As the same problem arises in outbreak detection, this strand of literature may be a helpful starting point (see e.g., \citealt{Noufaily2013}).
 
 
 
@@ -689,37 +693,37 @@ $$
 $$
 where $z_\alpha$ is the $\alpha$ quantile of the standard normal distribution (with $\alpha \in \{0.4, 0.9, 0.975\}$).
 
-If $f$ was set to the natural logarithm, the question remains how to obtain statements concerning thresholds $q_{X, \alpha}$ on the original scale. Approximation via a second-order Taylor expansion yields
+If $f$ was set to the natural logarithm, the question remains how to obtain statements concerning thresholds $\hat{q}_{X, \alpha}$ on the original scale. Approximation via a second-order Taylor expansion yields
 \begin{equation}
 \mathbb{E}(\hat{q}_{X, \alpha}) = \mathbb{E}\left\{\exp(\hat{q}_{Y, \alpha})\right\} \approx \exp\left\{\mathbb{E}(\hat{q}_{Y, \alpha})\right\} \times \left\{1 + \frac{\text{Var}(\hat{q}_{Y, \alpha})}{2} \right\}.
 \label{eq:taylor}
 \end{equation}
 Empirically, after transformation to the log scale, the variance of the reference observations is low in our applied setting. The resulting variances of $q_{Y, \alpha}$ are then quite small and do not play an important role in equation \eqref{eq:taylor}. We can thus use the even simpler approximation
 \begin{equation}
-\mathbb{E}(q_{\hat{Y}, \alpha}) \approx \exp\left\{\mathbb{E}(\hat{q}_{Y, \alpha})\right\} \approx \exp\{\mathbb{E}(\bar{Y}) + z_\alpha \sqrt{\mathbb{E}(S^2)}\}.
+\mathbb{E}(\hat{q}_{\hat{Y}, \alpha}) \approx \exp\left\{\mathbb{E}(\hat{q}_{Y, \alpha})\right\} \approx \exp\{\mathbb{E}(\bar{Y}) + z_\alpha \sqrt{\mathbb{E}(S^2)}\}.
 \end{equation}
 As can be seen from Figures 2 and 3 from the main manuscript, this approximation works very well in practice. % To compute the values indicated by the small black crosses, we just plugged the empirical mean vectors and covariance matrices of the $\mathbf{Y}_j$ in the respective data sets into equations \eqref{eq:expectation_mu}--\eqref{eq:expectation_q}.
 
 \subsection{Derivations for Section \ref{subsec:smoothing}}
 
-Remember that we denote by $p_j$ the peak week of the smoothed incidences in season $j$ and defined
+Remember that we set $f$ to the identity function, denote by $p_j$ the peak week of the smoothed incidences in season $j$ and define
 $$
-x^\text{smo}_{j, p_j} = \sum_{d = 0}^l x^\text{raw}_{j, p_j - d} = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \mathbf{X}^{\text{raw}}_j.
+Y_j^{(1)} = X_j^{(1)} = X^\text{smo}_{j, p_j} = \sum_{d = 0}^l X^\text{raw}_{j, p_j - d} = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \tilde{\mathbf{X}}^{\text{raw}}_j.
 $$
-As we assumed that $n = 1$ and $f$ is the identity function (i.e., $y_j^{(1)} = x_j^{(1)}$), equation \eqref{eq:moments} simplifies to
+As we assume that $n = 1$, equation \eqref{eq:moments} simplifies to
 \begin{align}
 \begin{split}
-\bar{Y} & = \frac{\sum_{j = 1}^m x_{j, p_j}^\text{smo}}{nm}\\
-S^2 & = \sqrt{ \frac{\sum_{j = 1}^m (x_{j, p_j}^\text{smo}  - \bar{y})}{nm - 1}}.
+\bar{Y} & = \frac{\sum_{j = 1}^m Y_j^{(1)}}{nm}\\
+S^2 & = \sqrt{ \frac{\sum_{j = 1}^m (Y_j^{(1)}  - \bar{Y})}{nm - 1}}.
 \end{split}
 \end{align}
 It is clear that
 $$
-\mathbb{E}(\bar{Y}) = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \mathbb{E}(\mathbf{X}^{\text{raw} \top}_j) = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \boldsymbol{\mu}^\text{raw} = \frac{1}{l}\sum_{i = 1}^l \mu^\text{raw}_i.
+\mathbb{E}(\bar{Y}) = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \mathbb{E}(\tilde{\mathbf{X}}^{\text{raw}}_j) = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \boldsymbol{\mu}^\text{raw} = \frac{1}{l}\sum_{i = 1}^l \mu^\text{raw}_i.
 $$
-The expression for $S^2$ is known to be an unbiased estimator for the variance of $X_{j, p_j}^\text{smo}$, i.e.
+The expression for $S^2$ is known to be an unbiased estimator for the variance of $Y_j^{(1)}$, i.e.
 $$
-\mathbb{E}(S^2) = \text{Var}(X_{j, p_j}^\text{smo}) = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \mathbf{\Sigma}^\text{raw} \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix} = \ \frac{1}{l^2} \sum_{i = 1}^l \sum_{i' = 1}^n \sigma^\text{raw}_{i', i}.
+\mathbb{E}(S^2) = \text{Var}(Y_j^{(1)}) = \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix}^\top \mathbf{\Sigma}^\text{raw} \begin{pmatrix} 1/l \\ \vdots \\ 1/l \end{pmatrix} = \ \frac{1}{l^2} \sum_{i = 1}^l \sum_{i' = 1}^n \sigma^\text{raw}_{i', i}.
 $$
 This completes the proof.
 
@@ -743,7 +747,7 @@ $$
 $$
 and thus
 $$
-S \ \  \stackrel{\text{approx}}{\sim} \ \ \text{N}\left(1, \frac{1}{2\times(m - 1)}\right).
+S \ \  \stackrel{\text{approx}}{\sim} \ \ \text{N}\left(1, \ \ \frac{1}{2\times(m - 1)}\right).
 $$
 Combining these two results and using the independece of sample mean and standard deviation, we get
 $$
@@ -751,7 +755,7 @@ $$
 $$
 Equation \eqref{eq:q_Y} is then obtained by simple re-scaling and shifting.
 
-We can now compute the sensitivity. It corresponds to the probability that $Y^{(1)}_{m + 1} > \hat{q}_{Y, \alpha}$ given exceedance $Y^{(1)}_{m + 1} > z_\alpha$ (keep in mind that $y^{(1)}_{m + 1}$ it is assumed to follow a standard normal distribution). This conditional probability is straightforward to evaluate using the integral in equation \eqref{eq:sens}. The derivation of the specificity follows the same argument.
+We can now compute the sensitivity. It corresponds to the probability that $Y^{(1)}_{m + 1} > \hat{q}_{Y, \alpha}$ given exceedance $Y^{(1)}_{m + 1} > z_\alpha$ (keep in mind that $Y^{(1)}_{m + 1}$ it is assumed to follow a standard normal distribution). This conditional probability is straightforward to evaluate using the integral in equation \eqref{eq:sens}. The derivation of the specificity follows the same argument.
 
 \newpage
 
