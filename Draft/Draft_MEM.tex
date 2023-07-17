@@ -157,7 +157,7 @@ for $\alpha = 0.4, 0.9, 0.975$.
 \item \textbf{Application of thresholds:} The obtained thresholds are applied to classify the season peak value of the $(m + 1)-th$ season. Depending on the exact specification, thresholds can be applied either to the raw peak value $x_{m + 1}^{\text{raw}, (1)}$ or the smoothed version $x_{m + 1}^{\text{smo}, (1)}$.
 \end{enumerate}
 
-\noindent The MEM and WHO methods are special cases of this procedure, see also overview in Table \ref{tab:differences}. In the MEM method, no smoothing is applied and the default data transformation $f$ is the natural logarithm.  \cite{Vega2015} recommend to use $5 \leq m \leq 10$ seasons to ensure a recent data basis. The number of observations included per season is set to $n = 30/m$, rounded to the nearest integer (with a minimum value of $n = 1$). The total number of historical observations is thus kept approximately fixed. We note that this description refers to the specification from \cite{Vega2015}, which is also reflected in the default settings of the accompanying R package \texttt{mem} \citep{Lozano2020}. The package, however, permits the user to choose $n$, $m$, and $f$ (\texttt{i.type.intensity	= 5} for no transformation, \texttt{i.type.intensity = 6} for the log transformation), thus offering considerable flexibility. We note that while \texttt{mem} does not currently allow for data smoothing using a moving average, alternatives like LOESS (locally estimated scatterplot smoothing) are available. % The term \textit{moving epidemic method} could thus also be used as an umbrella term for the general procedure described above. We here use it in a more narrow sense for the specification from \cite{Vega2015}, reflected in the default settings of the \texttt{mem} package.
+\noindent The MEM and WHO methods are special cases of this procedure, see also overview in Table \ref{tab:differences}. In the MEM method, no smoothing is applied and the default data transformation $f$ is the natural logarithm.  \cite{Vega2015} recommend to use $5 \leq m \leq 10$ seasons to ensure a recent data basis. The number of observations included per season is set to $n = 30/m$, rounded to the nearest integer (with a minimum value of $n = 1$). The total number of historical observations is thus kept approximately fixed. We note that this description refers to the specification from \cite{Vega2015}, which is also reflected in the default settings of the accompanying R package \texttt{mem} \citep{Lozano2020}. The package, however, permits the user to choose $n$, $m$, and $f$ (\texttt{i.type.intensity	= 5} for no transformation, \texttt{i.type.intensity = 6} for the log transformation), thus offering considerable flexibility. We note that while \texttt{mem} does not currently allow for data smoothing using a moving average, alternatives like LOESS are available (locally estimated scatterplot smoothing; used e.g., by \citealt{Wang2023}). % The term \textit{moving epidemic method} could thus also be used as an umbrella term for the general procedure described above. We here use it in a more narrow sense for the specification from \cite{Vega2015}, reflected in the default settings of the \texttt{mem} package.
 % \begin{itemize}
 % \item
 
@@ -203,22 +203,21 @@ smoothing of new season peak & none & none\\
 To improve our understanding of the different settings in which the MEM and WHO methods are applied in practice we performed a literature search of articles published in English language and citing the papers \cite{Vega2015}, \cite{WHO2014} and \cite{WHO2017} until December 2020 (identified via \textit{CrossRef} and \textit{Google Scholar}). The results are summarized in Table \ref{tab:literature}. As can be seen from the large number of entries from the years 2019 and 2020, the MEM has quickly become a standard approach in the determination of intensity thresholds for influenza and other respiratory diseases. The articles come from numerous countries and in many cases have been co-authored by representatives of national or regional public health agencies. In most analyses, threshold levels at the 40th, 90th and 97.5th percentile as in Section \ref{sec:definitions} are used. Variability with respect to the number $m$ of historical seasons included is considerable, with a range from 3 to 16 seasons. Consequently, the number $n$ of observations included per season ranges from two to ten (none of the above papers indicated a modification of the default setting $n = 30/m$ of the moving epidemic method). We only found three published applications of the WHO method, one of them providing a comparison to the thresholds from the MEM method \citep{Rguig2020}.
 
 \begin{table}[h!]
-\caption{Applications of the MEM and WHO method to determine intensity thresholds for respiratory diseases. We did not include works where only baseline thresholds are computed. The number of seasons included to compute thresholds is denoted by $m$, the number of observations used per season by $n$. The ``Percentiles'' column indicates which percentiles were used for the medium, high and very high thresholds, with ``?'' indicating that no explicit information was found. Abbreviations: SARI = severe acute respiratory infection; ILI = influenza-like illness; RSV = respiratory syncytial virus.}
+\caption{\footnotesize Published applications of the MEM and WHO methods to estimate intensity thresholds. The number of seasons used to compute thresholds is denoted by $m$, the number of observations used per season by $n$. ``Percentiles'' indicates which percentiles were used for the medium, high and very high thresholds, with ``?'' indicating no information was found. Abbreviations: ARI/SARI = (severe) acute respiratory infection; ILI = influenza-like illness; RSV = respiratory syncytial virus.}
 \label{tab:literature}
 \center
 \footnotesize
 \begin{tabular}{l l l l l l l}
-\multicolumn{7}{c}{(a) Moving epidemic method}\\ \\
-
+\multicolumn{7}{c}{(a) Moving epidemic method}\\
 \toprule
-Region & Disease & Years covered & $m$ & $n$ & Percentiles & Authors\\
+Region & Disease & Years & $m$ & $n$ & Percentiles & Authors\\
 \midrule
 Africa (25 countries) & influenza & varies & varies & varies & 40, 90, 97.5 & \cite{Igboh2021} \\
 Australia & ILI/influenza & 2012--2017 & 5 & 6 & 40, 90, 99 & \cite{Vette2018}\\
 Australia, Chile, & ILI/SARI & 2013--2019 & 6 & 5 & 40, 90, 97.5 & \cite{Sullivan2019}\\
 New Zealand,\\
 South Africa\\
-Bangladesh & influenza & 2016--2019 & 4 & 8 & 40, 90, 97.5 & \cite{AbaOud2021}\\
+Bangladesh & influenza & 2016--2019 & 4 & 8 & 40, 90, 97.5 & Aba Oud et al (\citeyear{AbaOud2021})\\
 Catalonia & ILI & 2010--2016 & 5 & 6 & ? & \cite{Basile2018}\\
 Catalonia & ILI & 2005--2018 & 12 & 3 & ? & \cite{Basile2019}\\
 Catalonia & ILI/influenza & 2010--2017 & 7 & 4 & ? & \cite{Torner2019}\\
@@ -226,8 +225,13 @@ Egypt & SARI/ILI & 2010--2017 & 6 & 5 & 40, 90, 97.5 & \cite{AbdElGawad2020}\\
 Egypt & SARI & 2013--2015 & 3 & 10 & ? & \cite{Elhakim2019}\\
 England & ILI & 2010--2016 & 6 & 5 & ? & \cite{Wagner2018}\\
 Finland & influenza & 2011--2016 & 5 & 6 & ? & \cite{Pesaelae2019}\\
-Mexico & resp. dis. short-term& 2015--2019 & 5 & 6 & 40, 90, 97.5 & \cite{HernandezAvila2022}\\
-& disability claims\\
+Guangdong, China & influenza & 2011-2018 & 7 & 4 & 40, 90, 97.5 & \cite{Kang2021} \\
+Hubei, China & influenza & 2010--2018 & 8 & 4 & 40, 90, 97.5 & \cite{Jiang2022} \\
+Ireland & numerous, incl. ILI, & 2015--2019 & 5 & 6 & ? & \cite{Domegan2022}\\
+& all-cause mortality\\
+Maritius & ARI & 2012--2018 & varies$^1$ & varies & 40, 90, 97.5 & Teeluck et al (\citeyear{Teeluck2021}) \\
+Mexico & resp. dis. short-term& 2015--2019 & 5 & 6 & 40, 90, 97.5 & Hernandez-Avila\\
+& disability claims & & & & & et al (\citeyear{HernandezAvila2022})\\
 Montenegro & ILI & 2010--2018 & 7 & 4 & 40, 90, 97.5 & \cite{Rakocevic2019}\\
 Morocco & ILI & 2005--2017 & 11 & 3 & 40, 90, 97.5 & \cite{Rguig2020}\\
 Netherlands & RSV & 2005--2017 & 12 & 3 & 40, 90, 97.5 & \cite{Vos2019}\\
@@ -235,11 +239,13 @@ New Zealand & SARI, ILI, influenza & 2015-2019 & 5 & 6 & 40, 90, 97.5 & \cite{Wo
 Norway & influenza & 2006--2015 & 9 & 3 & ? & \cite{Benedetti2019}\\
 Pakistan & ILI, SARI & 2008--2017 & 10 & 3 & 40, 90, 97.5 & \cite{Nisar2020}\\
 Portugal & ILI & 2012--2017 & 5 & 6 & 40, 90, 97.5 & \cite{Pascoa2018}\\
+Russia & influenza & 2015--2022 & 7 & 4 & ? & \cite{Sominina2022}\\
 Scotland & influenza & 2010--2018 & 7 & 4 & ? & \cite{Murray2018}\\
 Scotland & influenza & 2010--2019 & 7--8 & 4 & 40, 90, 97.5 & \cite{Dickson2020}\\
 Slovenia & RSV & 2008--2018 & 10 & 3 & 40, 90, 97.5 & \cite{Grilc2021}\\
 Spain (17 regions) & ILI & 2003--2015 & 4--10 & 3--8 & 40, 90, 97.5 & \cite{Bangert2017}\\
 Spain & ILI & 2001--2018 & 16 & 2 & 40, 90, 97.5 & \cite{RedondoBravo2020}\\
+Sweden & influenza & 2008--2019 & 12 & 3 & ? & \cite{Spreco2020}\\
 Tunisia & ILI & 2009-2018 & 9 & 3 & 50, 90, 95 & \cite{Bouguerra2020}\\
 United Kingdom & ILI & 2000--2013 & 10 & 3 & 40, 90, 97.5 & \cite{Green2015}\\
 United Kingdom & ILI/RSV & 2011--2018 & 4--6 & 5--8 & 40, 90, 97.5 & \cite{Harcourt2019}\\
@@ -247,16 +253,20 @@ USA & ILI/influenza & 2003--2015 & 11 & 3 & 50, 90, 98 & \cite{Biggerstaff2017}\
 USA & ILI & 2010--2015 & 5 & 6 & 50, 90, 98 & \cite{Dahlgren2018}\\
 USA & influenza & 2010--2016 & 6 & 5 & 50, 90, 98 & \cite{Dahlgren2019}\\
 USA & all-cause mortality & 2013--2020 & 7 & 3 & 50, 95, 99.5 & \cite{Dahlgren2022}\\
-\bottomrule\\
-\multicolumn{7}{c}{(b) WHO method}\\ \\
+Various (17 countres) & RSV & 2015--2020 & 5 & 6 & 40, 90, 97.5 & \cite{Wang2023} \\ % use smoothing
+\midrule \\
+\multicolumn{7}{c}{(b) WHO method}\\
 \toprule
-Region & Disease & years covered & $m$ & $n$ & percentiles & authors\\
+Region & Disease & years covered & $m$ & $l$ & percentiles & authors\\
 \midrule
-Cambodia & ILI & 2009--2015 & 7 & 1 & mean, 90, 95 & \cite{Ly2017}\\
-Morocco & ILI & 2005--2017 & 11 & 1 & 40, 90, 97.5 & \cite{Rguig2020}\\
-Philippines & ILI & 2006--2012 & 7 & 1 & 90 & \cite{Lucero2016}\\
-Victoria/Australia & ILI & 2002--2011 & 6--10 & 1 & 90, 95 & \cite{Tay2013}\\
+Cambodia & ILI & 2009--2015 & 7 & ? & mean, 90, 95 & \cite{Ly2017}\\
+Maritius & ARI & 2012--2018 & varies$^1$ & ? & 40, 90, 97.5 & Teeluck et al (\citeyear{Teeluck2021}) \\
+Morocco & ILI & 2005--2017 & 11 & 3 & 40, 90, 97.5 & \cite{Rguig2020}\\
+Philippines & ILI & 2006--2012 & 7 & 4 & 90 & \cite{Lucero2016}\\
+Tokyo, Japan & influenza & 2014--2018 & 5 & ? & 90, 95 & \cite{Matsuda2022} \\
+Victoria/Australia & ILI & 2002--2011 & 6--10 & ? & 90, 95 & \cite{Tay2013}\\
 \bottomrule\\
+\multicolumn{7}{c}{$^1$ Teeluck at al (\citeyear{Teeluck2021}) use various methods to split up multi-peak seasons, leading to different effective numbers of waves used.}\\ 
 \end{tabular}
 \end{table}
 
