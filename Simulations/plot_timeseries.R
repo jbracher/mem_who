@@ -8,7 +8,7 @@ setwd(dirname(current_path))
 library(zoo)
 
 # a helper function for plotting:
-plot_mem_ts <- function(matr, xlim, ylab = "inc / 100,000", ylim = c(0, 400), ...){
+plot_mem_ts <- function(matr, xlim, ylab = "re-scaled incidence", ylim = c(0, 400), ...){
   # get years as numeric:
   years <- as.numeric(substr(colnames(matr), start = 1, stop = 4))
   # labels for axes:
@@ -88,18 +88,18 @@ colnames(dat_grand_est) <- gsub("GRAND.EST_", "", colnames(dat_grand_est))
 pdf("../Draft/figure/plot_data_fr.pdf", width = 9, height = 5.5)
 
 # structure plot area:
-par(las = 1, mar = c(3, 4, 1, 1))
+par(las = 1, mar = c(3, 4, 1.8, 1))
 layout(matrix(c(1, 1, 1, 1,
                 2, 2, 2, 2,
                 3, 4, 5, 6), ncol = 4, byrow = TRUE))
 
 # time series Grand Est:
 plot_mem_ts(dat_grand_est, xlim = c(1985.5, 2018.5), ylim = c(0, 300))
-legend("top", legend = " Grand Est  ", bty = "n", cex = 1.2, bg = "white")
+mtext(text = " Grand Est  ", side = 3, cex = 0.85, line = 0.7)
 
 # time series Nouvelle Aquitaine:
 plot_mem_ts(dat_nouvelle_aquitaine, xlim = c(1985.5, 2018.5), ylim = c(0, 300))
-legend("top", legend = " Nouvelle Aquitaine  ", bty = "n", cex = 1.2, bg = "white")
+mtext(text = " Nouvelle Aquitaine  ", side = 3, cex = 0.85, line = 0.7)
 
 # boxplots:
 bplot_ranks(dat_fr, main = "Distribution by rank in season")
@@ -131,18 +131,18 @@ colnames(dat_region7) <- gsub("Region7_", "", colnames(dat_region7))
 pdf("../Draft/figure/plot_data_us.pdf", width = 9, height = 5.5)
 
 # structure plot area:
-par(las = 1, mar = c(3, 4, 1, 1))
+par(las = 1, mar = c(3, 4, 1.8, 1))
 layout(matrix(c(1, 1, 1, 1,
                 2, 2, 2, 2,
                 3, 4, 5, 6), ncol = 4, byrow = TRUE))
 
 # time series Region 1:
 plot_mem_ts(dat_region1, xlim = c(1998.5, 2017.5), ylim = c(0, 300))
-legend("top", legend = " HHS Region 1  ", bty = "n", cex = 1.2, bg = "white")
+mtext(text = " HHS Region 1  ", side = 3, cex = 0.85, line = 0.7)
 
 # time series Region 7:
 plot_mem_ts(dat_region7, xlim = c(1998.5, 2017.5), ylim = c(0, 300))
-legend("top", legend = " HHS Region 7  ", bty = "n", cex = 1.2, bg = "white")
+mtext(text = " HHS Region 7  ", side = 3, cex = 0.85, line = 0.7)
 
 
 # boxplots:

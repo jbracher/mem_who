@@ -1,8 +1,12 @@
 # define colours:
-col_very_high <- "darkorchid4"
-col_high <- "red"
-col_medium <- "orange"
-col_low <- "yellow"
+# col_very_high <- "darkorchid4"
+# col_high <- "red"
+# col_medium <- "orange"
+# col_low <- "yellow"
+col_very_high <- "purple4"
+col_high <- "tomato2"
+col_medium <- rgb(255/255, 178/255, 104/255) # light orange
+col_low <- rgb(255/255, 255/255, 180/255) # light red
 
 
 # function to summarize simulation results
@@ -298,7 +302,7 @@ five_plots <- function(thresholds_0.4, thresholds_0.9, thresholds_0.975,
   plot_exceedance_summary(summary_exceedance, xlab = "# included seasons m", ylab = "average share")
   
   # summary of sensitivity:
-  plot_sim_summary(summary_sens_spec, xlab = "# included seasons", ylab = "sensitivity",
+  plot_sim_summary(summary_sens_spec, xlab = "# included seasons m", ylab = "sensitivity",
                    ylim = 0:1, show_bands = FALSE, variable_to_plot = "sens", hlines = 0:5/5)
   if(!is.null(approx_sens)){
     lines_approx_expectations(approx_sens)
@@ -307,14 +311,14 @@ five_plots <- function(thresholds_0.4, thresholds_0.9, thresholds_0.975,
   mtext(side = 3, text = main2, cex = cex2, line = line2, font = 2)
   
   # summary of specificity:
-  plot_sim_summary(summary_sens_spec, xlab = "# included seasons", ylab = "specificity",
+  plot_sim_summary(summary_sens_spec, xlab = "# included seasons m", ylab = "specificity",
                    ylim = 0:1, show_bands = FALSE, variable_to_plot = "spec", hlines = 0:5/5)
   if(!is.null(approx_spec)){
     lines_approx_expectations(approx_spec)
   }
   
   # summary of PPVs:
-  plot_sim_summary(summary_ppv_npv, xlab = "# included seasons", ylab = "PPV",
+  plot_sim_summary(summary_ppv_npv, xlab = "# included seasons m", ylab = "PPV",
                    ylim = 0:1, show_bands = FALSE, variable_to_plot = "ppv", hlines = 0:5/5)
   if(!is.null(approx_ppv)){
     lines_approx_expectations(approx_ppv)
@@ -395,6 +399,7 @@ mosaic <- function(classification_matrix){
 }
 
 
+# use these functions instead to get fancy mosaic plots:
 
 # classification_matrix <- function(results_0.4, results_0.9, results_0.975, peaks_test, i.seasons){
 #   # true classification of peaks:

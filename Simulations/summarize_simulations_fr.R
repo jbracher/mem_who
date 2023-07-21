@@ -148,7 +148,7 @@ dev.off()
 
 
 # 7-day moving average:
-pdf("../Draft/figure/plot_smoothing7_fr_small.pdf", width = 9, height = 6)
+pdf("../Draft/figure/plot_smoothing7_fr_small.pdf", width = 9, height = 8)
 
 par(mar = c(4, 4, 3, 1), las = 1)
 # layout(matrix(c(1:20, rep(21, 5)), ncol = 5, byrow = TRUE), heights = c(rep(1, 4), 0.7))
