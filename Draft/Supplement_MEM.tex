@@ -137,7 +137,7 @@ Victoria/Australia & ILI & 2002--2011 & 6--10 & ? & 90, 95 & \cite{Tay2013}\\
 \subsection{Mapping  between notation of this paper and arguments in the R package \texttt{mem}}
 \label{suppl:mapping}
 
-With\todo{mention in reply} the exception of a correction for secular trends (Section \ref{subsec:trends}), all considered thresholding approaches can applied using the R package \texttt{mem} \citep{Lozano2020}. We here summarize how the notation used in our paper relates to the arguments of the function \texttt{mem::memmodel}.
+With the exception of a correction for secular trends (Section \ref{subsec:trends}), all considered thresholding approaches can be applied using the R package \texttt{mem} \citep{Lozano2020}. We here summarize how the notation used in our paper relates to the arguments of the function \texttt{mem::memmodel}.
 
 \begin{itemize}
 \item The transformation function $f$ is chosen via the argument \texttt{i.type.intensity}, with \texttt{i.type.intensity = 5} for no transformation and \texttt{i.type.intensity = 6} for the log transformation. We note that \texttt{i.type.intensity = 1} through \texttt{4} correspond to thresholds based on various types of confidence intervals. As detailed in Section \ref{subsec:cis}, we do not recommend their use.
@@ -145,7 +145,7 @@ With\todo{mention in reply} the exception of a correction for secular trends (Se
 \item The number $n$ of observations per season to use corresponds to \texttt{i.n.max}.
 \item As of June 2024, in the development version of \texttt{mem} there is an argument \texttt{i.use.t}. When set to \texttt{TRUE}, quantiles of a $t$-distribution as in equation \eqref{eq:q_Y_t} are used. If set to \texttt{FALSE} (currently the default), threshold are based on a normal distribution as in \eqref{eq:def_q}.
 \end{itemize}
-The deveopment version of the \texttt{mem} package can be installed from GitHub using the \texttt{devtools} package and running
+The deveopment version of the \texttt{mem} package can be installed from GitHub using the \texttt{devtools} package and running the following.
 \medskip
 
 \texttt{library("devtools")}
@@ -164,7 +164,7 @@ The deveopment version of the \texttt{mem} package can be installed from GitHub 
 \subsection{Details on Section \ref{subsec:regression}}
 \label{suppl:regression}
 
-We consider a classic multiple linear regression model (e.g., \citealt{Fahrmeir2013})
+We consider a classic multiple linear regression model (e.g., \citealt{Fahrmeir2013}),
 $$
 \mathbf{Y} = \mathbf{Z}\boldsymbol{\beta} + \boldsymbol{\varepsilon},
 $$
@@ -172,7 +172,7 @@ where $\mathbf{Y}, \boldsymbol{\varepsilon} \in \mathbb{R}^{m\times 1}, \mathbf{
 $$
 \boldsymbol{\varepsilon} \sim \text{N}(\boldsymbol{0}, \sigma^2_\varepsilon \mathbf{I}_m).
 $$
-The parameter estimates $\hat{\boldsymbol{\beta}}$ can be estimated using ordinary least squares (OLS). The error variance is estimated via
+The parameter estimates $\hat{\boldsymbol{\beta}}$ can be obtained using ordinary least squares (OLS). The error variance is estimated via
 $$
 \hat{\sigma}^2_\varepsilon = \frac{1}{m - p} (\mathbf{Y} - \mathbf{Z}\hat{\boldsymbol{\beta}})^\top (\mathbf{Y} - \mathbf{Z}\hat{\boldsymbol{\beta}}).
 $$
@@ -252,11 +252,11 @@ There is no general way of computing the expectation $\mathbb{E}(S)$ from $\math
 \mathbb{E}(S) \approx \sqrt{\mathbb{E}(S^2)}
 \label{eq:expectation_sigma}
 \end{equation}
-is a reasonable approximation. We can then plug equations \eqref{eq:expectation_mu} and \eqref{eq:expectation_sigma} into the formulae for the thresholds $q_{Y, \alpha}$ on the transformed scale and obtain
+is a reasonable approximation. For thresholds of form \eqref{eq:def_q} we can plug equations \eqref{eq:expectation_mu} and \eqref{eq:expectation_sigma} into the formulae for the thresholds $q_{Y, \alpha}$ on the transformed scale and obtain
 $$
 \mathbb{E}(\hat{q}_{Y, \alpha}) \approx \mathbb{E}(\bar{Y}) + z_\alpha \sqrt{\mathbb{E}(S^2)},
 $$
-where $z_\alpha$ is the $\alpha$ quantile of the standard normal distribution (with $\alpha \in \{0.4, 0.9, 0.975\}$).
+where $z_\alpha$ is the $\alpha$ quantile of the standard normal distribution (with $\alpha \in \{0.4, 0.9, 0.975\}$). For thresholds of type \eqref{eq:q_Y_t} we obtain formula \eqref{eq:expectation_q} from the main manuscript.
 
 If $f$ was set to the natural logarithm, the question remains how to obtain statements concerning thresholds $\hat{q}_{X, \alpha}$ on the original scale. Approximation via a second-order Taylor expansion yields
 \begin{equation}
@@ -267,7 +267,7 @@ Empirically, after transformation to the log scale, the variance of the referenc
 \begin{equation}
 \mathbb{E}(\hat{q}_{\hat{Y}, \alpha}) \approx \exp\left\{\mathbb{E}(\hat{q}_{Y, \alpha})\right\} \approx \exp\{\mathbb{E}(\bar{Y}) + z_\alpha \sqrt{\mathbb{E}(S^2)}\}.
 \end{equation}
-As can be seen from Figures 2 and 3 from the main manuscript, this approximation works very well in practice. % To compute the values indicated by the small black crosses, we just plugged the empirical mean vectors and covariance matrices of the $\mathbf{Y}_j$ in the respective data sets into equations \eqref{eq:expectation_mu}--\eqref{eq:expectation_q}.
+As can be seen from Figures 2 and 3 from the main manuscript, this approximation works very well in practice. We note that this approximation does not require the normality assumption (N). However, it does require that the higher order terms in the Taylor approximation are negligible, which may not be the case e.g., for strongly skewed distributions. % To compute the values indicated by the small black crosses, we just plugged the empirical mean vectors and covariance matrices of the $\mathbf{Y}_j$ in the respective data sets into equations \eqref{eq:expectation_mu}--\eqref{eq:expectation_q}.
 
 \subsection{Derivations for Section \ref{subsec:smoothing}}
 
@@ -403,7 +403,7 @@ where in order to simplify the display we did not write out the mean and varianc
 \includegraphics[width = 0.8\textwidth]{figure/plot_cost_trend_fr.pdf}
 \end{center}
 \vspace{-10mm}
-\caption{Sensitivity, specificity and positive predictive values in three settings involving secular trends. Top row: now true secular trend. Middle row: secular trend with a yearly growth rate of 3\%. Bottom: Secular trend with a yearly growth rate of 7\%. In each plot we display the respective values as a function of $m$ and whether the secular trend was accounted for in thresholds or not (filled squares: not accounted; unfilled: accounted).}
+\caption{Sensitivity, specificity and positive predictive values in three settings involving secular trends. Top row: no true secular trend. Second and third row: secular trend with a yearly growth rate of $\pm 3\%$. Fourth and fifth row: Secular trend with a yearly growth rate of $\pm 7\%$. In each plot we display the respective values as a function of $m$ and whether the secular trend was accounted for in thresholds or not (filled squares: not accounted; unfilled: accounted).}
 \label{fig:cost_trend}
 \end{figure}
 
