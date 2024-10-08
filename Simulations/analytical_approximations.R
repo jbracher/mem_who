@@ -5,13 +5,24 @@ current_path = rstudioapi::getActiveDocumentContext()$path # get path of this fi
 setwd(dirname(current_path))
 
 # analytical approximation of expected thresholds base on mean vector and covariance matrix.
-approximate_expectations <- function(mu, Sigma, m, n){
+approximate_expectations <- function(mu, Sigma, m, n, distr = "normal"){
   mean_ana <- mean(mu)
   var_ana <- m/(m*n - 1)*sum(mu^2 + diag(Sigma)) - (1/(n*(m*n - 1)) * sum(Sigma) + m/(n*(m*n - 1))*sum(mu)^2)
   sd_ana <- sqrt(var_ana)
-  threshold_0.4 <- mean_ana - 0.25*sd_ana
-  threshold_0.9 <- mean_ana + 1.28*sd_ana
-  threshold_0.975 <- mean_ana + 1.96*sd_ana
+  
+  if(distr == "normal"){
+    threshold_0.4 <- mean_ana - 0.25*sd_ana
+    threshold_0.9 <- mean_ana + 1.28*sd_ana
+    threshold_0.975 <- mean_ana + 1.96*sd_ana
+  }
+  
+  
+  if(distr == "t"){
+    threshold_0.4 <- mean_ana + qt(0.4, m*n - 1)*sqrt(1 + 1/(m*n))*sd_ana
+    threshold_0.9 <- mean_ana + qt(0.9, m*n - 1)*sqrt(1 + 1/(m*n))*sd_ana
+    threshold_0.975 <- mean_ana + qt(0.975, m*n - 1)*sqrt(1 + 1/(m*n))*sd_ana
+  }
+  
   
   return(c(mean = mean_ana,
            var = var_ana,
@@ -23,7 +34,7 @@ approximate_expectations <- function(mu, Sigma, m, n){
 
 # analytical approximation of expected thresholds based on data in mem format from which mean
 # and covariance matrix are estimated.
-approximate_expectations_from_data0 <- function(dat, log = FALSE, m, n){
+approximate_expectations_from_data0 <- function(dat, log = FALSE, m, n, distr = "normal"){
   
   # sort:
   for(i in 1:ncol(dat)) dat[, i] <- sort(dat[, i], decreasing = TRUE)
@@ -35,7 +46,7 @@ approximate_expectations_from_data0 <- function(dat, log = FALSE, m, n){
   mu <- colMeans(sub_t)
   Sigma <- cov(sub_t)
   
-  res <-approximate_expectations(mu = mu, Sigma = Sigma, m = m, n = n)
+  res <-approximate_expectations(mu = mu, Sigma = Sigma, m = m, n = n, distr = distr)
   
   if(log) res <- exp(res)
   
@@ -45,10 +56,10 @@ approximate_expectations_from_data0 <- function(dat, log = FALSE, m, n){
 # analytical approximation of expected thresholds based on data in mem format from which mean
 # and covariance matrix are estimated. Wrapper around approximate_expectations_from_data0
 # to apply to several values of n and K.
-approximate_expectations_from_data <- function(dat, log = FALSE, m, n){
+approximate_expectations_from_data <- function(dat, log = FALSE, m, n, distr = "normal"){
   ret <- NULL
   for(i in seq_along(n)){
-    res_temp <- approximate_expectations_from_data0(dat = dat, log = log, m = m[i], n = n[i])
+    res_temp <- approximate_expectations_from_data0(dat = dat, log = log, m = m[i], n = n[i], distr = distr)
     res_temp <- c(m = m[i], n = n[i], res_temp)
     if(is.null(ret)) ret <- res_temp else ret <- rbind(ret, res_temp)
   }
@@ -76,10 +87,18 @@ approx_expectations_nolog_us <- approximate_expectations_from_data(dat_for_mem_u
 approx_expectations1_nolog_fr <- approximate_expectations_from_data(dat_for_mem_fr, log = FALSE, m = 5:15, n = rep(1, 11))
 approx_expectations1_nolog_us <- approximate_expectations_from_data(dat_for_mem_us, log = FALSE, m = 5:15, n = rep(1, 11))
 
+approx_expectations1_t_fr <- approximate_expectations_from_data(dat_for_mem_fr, log = TRUE, m = 5:15, n = rep(1, 11), distr = "t")
+approx_expectations1_t_us <- approximate_expectations_from_data(dat_for_mem_us, log = TRUE, m = 5:15, n = rep(1, 11), distr = "t")
+
+approx_expectations1_nolog_t_fr <- approximate_expectations_from_data(dat_for_mem_fr, log = FALSE, m = 5:15, n = rep(1, 11), distr = "t")
+approx_expectations1_nolog_t_us <- approximate_expectations_from_data(dat_for_mem_us, log = FALSE, m = 5:15, n = rep(1, 11), distr = "t")
+
 
 # write out results:
 save(approx_expectations_fr, approx_expectations_us,
      approx_expectations1_fr, approx_expectations1_us,
      approx_expectations_nolog_fr, approx_expectations_nolog_us,
      approx_expectations1_nolog_fr, approx_expectations1_nolog_us,
+     approx_expectations1_t_fr, approx_expectations1_t_us,
+     approx_expectations1_nolog_t_fr, approx_expectations1_nolog_t_us,
      file = "Results/approx_expectations.rda")

@@ -158,7 +158,7 @@ modify_alpha <- function(col, alpha){
 }
 
 # plotting function for thresholds
-plot_sim_summary <- function(sim_summary, variable_to_plot = "averages", ylim = NULL, show_bands = TRUE, hlines = NULL, ...){
+plot_sim_summary <- function(sim_summary, variable_to_plot = "averages", ylim = NULL, show_bands = TRUE, hlines = NULL, add = FALSE, pch = 15, ...){
   # get indices of lower and upper interval ends:
   ind_lower <- names(sim_summary)[grepl("q_", names(sim_summary))][1]
   ind_upper <- names(sim_summary)[grepl("q_", names(sim_summary))][2]
@@ -170,10 +170,17 @@ plot_sim_summary <- function(sim_summary, variable_to_plot = "averages", ylim = 
     yl <- ylim
   }
 
-  # plot for medium threshold::
-  plot(sim_summary$range_i.seasons,
-       sim_summary[[variable_to_plot]][, "medium_0.4"], ylim = yl,
-       col = col_medium, pch = 15, ...)
+  # plot for medium threshold:
+  if(!add){ # new plot only if add == FALSE
+    plot(sim_summary$range_i.seasons,
+         sim_summary[[variable_to_plot]][, "medium_0.4"], ylim = yl,
+         col = col_medium, pch = pch, ...)
+  }else{
+    points(sim_summary$range_i.seasons,
+           sim_summary[[variable_to_plot]][, "medium_0.4"],
+           col = col_medium, pch = pch)
+  }
+
   abline(h = hlines, col = "lightgrey")
   # add intervals if desired:
   if(show_bands){
@@ -183,7 +190,7 @@ plot_sim_summary <- function(sim_summary, variable_to_plot = "averages", ylim = 
   }
 
   # add high thresholds:
-  points(sim_summary$range_i.seasons, sim_summary[[variable_to_plot]][, "high_0.9"], col = col_high, pch = 15)
+  points(sim_summary$range_i.seasons, sim_summary[[variable_to_plot]][, "high_0.9"], col = col_high, pch = pch)
   # intervals if desired
   if(show_bands){
     polygon(c(sim_summary$range_i.seasons, rev(sim_summary$range_i.seasons)),
@@ -192,7 +199,7 @@ plot_sim_summary <- function(sim_summary, variable_to_plot = "averages", ylim = 
   }
 
   # very high thresholds
-  points(sim_summary$range_i.seasons, sim_summary[[variable_to_plot]][, "very_high_0.975"], col = col_very_high, pch = 15)
+  points(sim_summary$range_i.seasons, sim_summary[[variable_to_plot]][, "very_high_0.975"], col = col_very_high, pch = pch)
   # intervals if desired
   if(show_bands){
     polygon(c(sim_summary$range_i.seasons, rev(sim_summary$range_i.seasons)),
@@ -278,7 +285,8 @@ five_plots <- function(thresholds_0.4, thresholds_0.9, thresholds_0.975,
                        approx_expectations, 
                        approx_sens = NULL, approx_spec = NULL, approx_ppv = NULL,
                        main = "", line = lin, cex = ce,
-                       main2 = "", line2 = lin + 1.5, cex2 = ce){
+                       main2 = "", line2 = lin + 1.5, cex2 = ce,
+                       interv = c(0.05, 0.95)){
   
   # compute summaries:
   summary_thresholds <- sim_summary(thresholds_0.4, thresholds_0.9, thresholds_0.975,

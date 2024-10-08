@@ -33,12 +33,24 @@ plot_mem_ts <- function(matr, xlim, ylab = "re-scaled incidence", ylim = c(0, 40
 
 # function for boxplot of observations by rank within season
 bplot_ranks <- function(matr, ylab = "", main = ""){
-  plot(NULL, xlim = c(0.5, 6.5), ylim = c(0, 1.1*max(matr)), xlab = "", ylab = ylab)
+  matr <- as.matrix(matr)
+  plot(NULL, xlim = c(0.5, 6.5), ylim = c(0, 1.3*max(matr)), xlab = "", ylab = ylab)
   mtext("value", 2, line = 2.6, cex = 0.6, las = 0)
-  mtext("rank in season", 1, line = 1.8, cex = 0.6)
+  mtext("rank i in season", 1, line = 1.8, cex = 0.6)
   mtext(main, 3, line = 0.7, cex = 0.7)
-  get_nth <- function(vect, n) sort(vect, decreasing = TRUE)[n]
-  for(i in 1:6) boxplot(apply(matr, 2, get_nth, n = i), at = i, add = TRUE, axes = FALSE)
+  
+  matr_sorted <- NA*matr
+  for(i in 1:ncol(matr)){
+    matr_sorted[, i] <- sort(matr[, i], decreasing = TRUE)
+    lines(matr_sorted[1:6, i], col = rgb(0.5, 0.5, 0.5, 0.1))
+  }
+  text(3.5, 1.27*max(matr), "Correlation to i = 1", cex = 0.7)
+  y_txt <- 1.15*max(matr)
+  for(i in 1:6){
+    co <- round(cor(matr_sorted[1, ], matr_sorted[i, ]), 2)
+    text(i, y_txt, co, cex = 0.7)
+    boxplot(matr_sorted[i,], at = i, add = TRUE, axes = FALSE, col = "white")
+  }
 }
 
 # function for QQ plot of peak values:
@@ -56,19 +68,44 @@ qqnorm_peaks <- function(matr, ylab = "", lim, main = "", ...){
 bplot_smoothed <- function(matr, ylab = "", xlab = "", main = ""){
   matr_smoothed3 <- data.frame(apply(matr, MARGIN = 2, FUN = rollmean, k = 3))
   matr_smoothed7 <- data.frame(apply(matr, MARGIN = 2, FUN = rollmean, k = 7))
-  plot(NULL, xlim = c(0.5, 3.5), ylim = c(0, 1.1*max(matr)), xlab = "", ylab = ylab,
+  plot(NULL, xlim = c(0.5, 3.5), ylim = c(0, 1.3*max(matr)), xlab = "", ylab = ylab,
        axes = FALSE)
   axis(1, at = 1:3, labels = c(1, 3, 7))
   axis(2)
   box()
+  matr_ordered <- NA*matr
+  matr_smoothed3_ordered <- NA*matr_smoothed3
+  matr_smoothed7_ordered <- NA*matr_smoothed7
+  for(j in 1:ncol(matr)){
+    matr_ordered[, j] <- sort(matr[, j], decreasing = TRUE)
+    matr_smoothed3_ordered[, j] <- sort(matr_smoothed3[, j], decreasing = TRUE)
+    matr_smoothed7_ordered[, j] <- sort(matr_smoothed7[, j], decreasing = TRUE)
+    
+    lines(1:3,
+          c(matr_ordered[1, j], matr_smoothed3_ordered[1, j], matr_smoothed7_ordered[1, j]),
+          col = rgb(0.5, 0.5, 0.5, 0.1))
+  }
+  
+  text(2, 1.27*max(matr), "Correlation to l = 1", cex = 0.7)
+  y_txt <- 1.15*max(matr)
+  text(1, y_txt, "1", cex = 0.7)
+  cor3 <- cor(unlist(matr_ordered[1, ]), unlist(matr_smoothed3_ordered[1, ]))
+  text(2, y_txt, round(cor3, 2), cex = 0.7)
+  cor7 <- cor(unlist(matr_ordered[1, ]), unlist(matr_smoothed7_ordered[1, ]))
+  text(3, y_txt, round(cor7, 2), cex = 0.7)
+  
   mtext("smoothing window l", 1, line = 1.8, cex = 0.6)
   mtext("season peak value", 2, line = 2.6, cex = 0.6, las = 0)
   mtext(main, 3, line = 0.7, cex = 0.7)
   get_nth <- function(vect, n) sort(vect, decreasing = TRUE)[n]
-  boxplot(apply(matr, 2, get_nth, n = 1), at = 1, add = TRUE, axes = FALSE)
-  boxplot(apply(matr_smoothed3, 2, get_nth, n = 1), at = 2, add = TRUE, axes = FALSE)
-  boxplot(apply(matr_smoothed7, 2, get_nth, n = 1), at = 3, add = TRUE, axes = FALSE)
+  boxplot(unlist(matr_ordered[1, ]), at = 1, add = TRUE, 
+          axes = FALSE, col = "white")
+  boxplot(unlist(matr_smoothed3_ordered[1, ]), at = 2,
+          add = TRUE, axes = FALSE, col = "white")
+  boxplot(unlist(matr_smoothed7_ordered[1, ]), at = 3, 
+          add = TRUE, axes = FALSE, col = "white")
 }
+
 
 
 
@@ -85,7 +122,7 @@ dat_grand_est <- dat_fr[, grepl("GRAND.EST", colnames(dat_fr))]
 colnames(dat_grand_est) <- gsub("GRAND.EST_", "", colnames(dat_grand_est))
 
 # generate plot:
-pdf("../Draft/figure/plot_data_fr.pdf", width = 9, height = 5.5)
+pdf("../Draft/figure/plot_data_fr2.pdf", width = 9, height = 5.5)
 
 # structure plot area:
 par(las = 1, mar = c(3, 4, 1.8, 1))

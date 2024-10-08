@@ -147,7 +147,7 @@ save(approx_sens, approx_spec, approx_ppv,
 
 # Plot:
 
-pdf("../Draft/figure/analytical_sens_spec.pdf", width = 8, height = 3.5)
+pdf("../Draft/figure/analytical_sens_spec.pdf", width = 8, height = 3)
 par(mfrow = c(1, 3))
 # sensitivity:
 plot(values_m, values_sens_0.975, type = "l", ylim = c(0, 1), col = "darkorchid4", lty = 2,
@@ -178,6 +178,8 @@ lines(values_m, values_spec_sim_0.9, col = "red")
 
 lines(values_m, values_spec_0.4, col = "orange", lty = 2)
 lines(values_m, values_spec_sim_0.4, col = "orange")
+
+mtext("Using quantiles of the normal distribution", line = 1.5)
 
 
 # PPV:

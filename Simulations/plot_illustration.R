@@ -76,6 +76,9 @@ axis(1, at = 2012:2018 + 0.5, labels = 2013:2019)
 box()
 # add thresholds:
 threshold_rectangles(thresh = thresh_mem, xleft = 2012, xright = 2019, ytop = yl[2])
+# grey out past seasons:
+rect(xleft = 2012, xright = 2018, ybottom = 0, ytop = yl[2], col = rgb(1, 1, 1, 0.5),
+     border = NA)
 abline(v = c(years, max(years) + 1), col = "lightgrey")
 
 # add time series:
@@ -152,6 +155,10 @@ axis(1, at = 2012:2018 + 0.5, labels = 2013:2019)
 box()
 # add thresholds:
 threshold_rectangles(thresh = thresh_who, xleft = 2012, xright = 2019, ytop = yl[2])
+# grey out past seasons:
+rect(xleft = 2012, xright = 2018, ybottom = 0, ytop = yl[2], col = rgb(1, 1, 1, 0.5),
+     border = NA)
+
 abline(v = c(years, max(years) + 1), col = "lightgrey")
 
 # add time series:
@@ -275,6 +282,9 @@ axis(1, at = 2012:2018 + 0.5, labels = 2013:2019)
 box()
 # add thresholds:
 threshold_rectangles(thresh = thresh_mem_normal, xleft = 2012, xright = 2019, ytop = yl[2])
+# grey out past seasons:
+rect(xleft = 2012, xright = 2018, ybottom = 0, ytop = yl[2], col = rgb(1, 1, 1, 0.5),
+     border = NA)
 abline(v = c(years, max(years) + 1), col = "lightgrey")
 
 # add time series:
@@ -351,6 +361,9 @@ axis(1, at = 2012:2018 + 0.5, labels = 2013:2019)
 box()
 # add thresholds:
 threshold_rectangles(thresh = thresh_mem_t, xleft = 2012, xright = 2019, ytop = yl[2])
+# grey out past seasons:
+rect(xleft = 2012, xright = 2018, ybottom = 0, ytop = yl[2], col = rgb(1, 1, 1, 0.5),
+     border = NA)
 abline(v = c(years, max(years) + 1), col = "lightgrey")
 
 reference_set <- numeric() # to collect reference set
@@ -471,6 +484,9 @@ box()
 for(i in 1:ncol(da_trend)){
   threshold_rectangles(thresh = exp(q_matr[i, ]), xleft = years_trend[i], xright = years_trend[i] + 1, ytop = yl[2])
 }
+# grey out past seasons:
+rect(xleft = 1985, xright = 2018, ybottom = 0, ytop = yl[2], col = rgb(1, 1, 1, 0.5),
+     border = NA)
 abline(v = c(years_trend, max(years_trend) + 1), col = "lightgrey")
 
 # add time series:
